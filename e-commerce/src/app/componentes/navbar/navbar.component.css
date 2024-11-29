@@ -1,0 +1,39 @@
+/* Change the background color of the navbar */
+.navbar {
+  background-color: #ffffff !important; /* Set to white or any desired color */
+  justify-content: space-between;
+
+}
+
+
+/* Change button styles to match your theme */
+.btn-outline-primary {
+  color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Adjust dropdown menu styles if needed */
+.dropdown-menu {
+  background-color: #f8f9fa;
+}
+
+/* Fix positioning issues */
+.navbar .navbar-collapse {
+  justify-content: space-between; /* Ensure proper spacing between elements */
+}
+
+.mat-toolbar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-container {
+  flex: 1;
+  margin: 0 15px;
+}

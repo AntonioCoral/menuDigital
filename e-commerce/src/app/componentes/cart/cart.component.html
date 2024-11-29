@@ -1,0 +1,93 @@
+<div class="container mt-5 main-content pt-16">
+  <h1>Carrito de Compras</h1>
+  <div *ngIf="items.length > 0; else emptyCart">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Acciones</th> <!-- Nueva columna para los botones de acción -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.product.price | currency }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ (item.product.price * item.quantity) | currency }}</td>
+            <td>
+              
+              <!-- Botón para disminuir la cantidad -->
+              <button class="btn " (click)="decreaseQuantity(item.product)">
+                <img src="assets/icons/decrease.png" alt="" style="height: 25px;"> <!-- Icono de disminuir --> 
+              </button>
+              
+              <!-- Botón para aumentar la cantidad -->
+              <button class="btn" (click)="increaseQuantity(item.product)">
+                <img src="assets/icons/add.png" alt="" style="height: 25px;"> <!-- Icono de incrementar --> 
+              </button>
+
+               <!-- Botón para eliminar el producto -->
+               <button class="btn" (click)="removeItem(item.product)">
+                <img src="assets/icons/remove.png" alt="" style="height: 25px;"> <!-- Icono de eliminar -->
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-4">
+      <p><strong>Total de productos:</strong> {{ totalQuantity }}</p>
+      <p><strong>Precio total:</strong> {{ totalPrice | currency }}</p>
+    </div>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal">Ordenar</button>
+  </div>
+  <ng-template #emptyCart>
+    <p>Tu carrito está vacío</p>
+  </ng-template>
+</div>
+
+ <!-- Modal -->
+ <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Detalles de la Orden</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="address" [(ngModel)]="address" name="address">
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Teléfono</label>
+            <input type="tel" class="form-control" id="phone" [(ngModel)]="phone" name="phone">
+          </div>
+          <div class="mb-3">
+              <label for="pagas" class="form-label">Con cuanto pagas</label>
+              <input type="number" class="form-control" id="pagas" [(ngModel)]="paga" name="paga">
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <a [href]="getWhatsAppLink()" target="_blank">
+          <button type="button" class="btn btn-primary">Enviar a WhatsApp</button>
+        </a>
+        <div class="mb-3">
+          <button type="button" class="btn btn-info" (click)="fetchLocation()">Obtener Ubicación</button>
+          <p *ngIf="locationUrl">Ubicación: <a href="{{ locationUrl }}" target="_blank">Ver en Maps</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

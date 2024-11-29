@@ -1,0 +1,50 @@
+<nav class="bg-blue-500 p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50">
+  <!-- Botón de hamburguesa o flecha de regreso -->
+  <div>
+    <ng-container *ngIf="!isCartPage; else backButton">
+      <button class="text-white focus:outline-none" (click)="toggleMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </ng-container>
+
+    <!-- Botón de regreso -->
+    <ng-template #backButton>
+      <button class="text-white focus:outline-none" (click)="goBackHome()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+      </button>
+    </ng-template>
+  </div>
+  <!-- Menú de categorías -->
+  <div *ngIf="isMenuOpen" class="bg-white p-4 shadow-lg absolute top-16 left-0 w-full z-50">
+    <ul>
+      <li *ngFor="let categoria of category">
+        <button class="w-full text-left p-2 hover:bg-gray-100" (click)="filtrarPorCategoria(categoria)">
+          {{ categoria.name }}
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Barra de búsqueda con ícono de búsqueda -->
+  <div class="flex-1 flex items-center">
+    <input type="text" class="p-2 w-full rounded-lg" placeholder="Buscar productos..." [(ngModel)]="searchQuery" />
+    <button class="ml-2 text-white focus:outline-none" (click)="buscarProductos()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 4a6 6 0 016 6 6 6 0 01-1.5 4l5.5 5.5a1 1 0 11-1.414 1.414l-5.5-5.5A6 6 0 1110 4z" />
+      </svg>
+    </button>
+    
+  </div>
+
+  <!-- Botón del carrito -->
+  <button class="text-white focus:outline-none ml-4" (click)="verCarrito()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l1 5h13l1-5h2M16 16a4 4 0 100-8 4 4 0 000 8zm-6 0a4 4 0 100-8 4 4 0 000 8z" />
+    </svg>
+    <span *ngIf="carrito.length" class="text-sm bg-red-500 text-white rounded-full px-2">{{ carrito.length }}</span>
+  </button>
+</nav>

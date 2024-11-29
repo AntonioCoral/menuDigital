@@ -1,0 +1,202 @@
+<div id="adCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="card mx-auto" style="width: 90%; height: 150px;">
+      <img src="./assets/servicios/promosTecatelight.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 1" >
+    </div>
+  </div>
+    <div class="carousel-item">
+      <div class="card mx-auto" style="width: 90%; height: 150px;">
+      <img src="./assets/servicios/promosixxx.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 2" >
+    </div>
+  </div>
+    <div class="carousel-item">
+      <div class="card mx-auto" style="width: 90%; height: 150px;">
+      <img src="./assets/servicios/promosixtecatecero.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 3" >
+    </div>
+  </div>
+    <div class="carousel-item">
+      <div class="card mx-auto" style="width: 90%; height: 150px;">
+      <img src="./assets/servicios/promomisiltecoriginal.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 3" >
+    </div>
+  </div>
+  <div class="carousel-item">
+    <div class="card mx-auto" style="width: 90%; height: 150px;">
+    <img src="./assets/servicios/promomisiltec.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 3" >
+  </div>
+</div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#adCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#adCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<!-- Sección de productos superpuesta sobre el carrusel -->
+<div class="product-section ">
+  <div class="main-container main-content pt-16">
+    <!-- Resultados de búsqueda -->
+    <div *ngIf="searchActive && products.length">
+      <div class="row">
+        <div *ngFor="let product of products" class="col-6 col-md-4 mb-4 ">
+          <div class="card product-card h-100">
+            <img [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'"
+                 alt="{{ product.name }}" class="product-image">
+            <div>
+              <h5>{{ product.name }}</h5>
+              <p> {{ product.price | currency }}</p>
+              <div *ngIf="product.options?.length">
+                <div *ngFor="let option of product.options" class="option-button-container">
+                  <button
+                    [ngClass]="{
+                      'option-selected': selectedOptions[+product.id]?.description === option.description
+                    }"
+                    class="btn btn  option-button"
+                    (click)="selectOption(product, option)"
+                  >
+                    {{ option.description }} - {{ option.price | currency }}
+                  </button>
+                </div>
+              </div>
+              <button
+                *ngIf="!product.options?.length"
+                class="btn btn-primary option-button"
+                (click)="addToCart(product)"
+              >
+                Agregar
+              </button>
+              <button
+                *ngIf="product.options?.length"
+                class="btn btn-primary add-cart-button"
+                (click)="addToCartWithOption(product)"
+              >
+                Agregar {{ selectedOptions[+product.id]?.description || 'al carrito' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mostrar si no hay resultados de búsqueda -->
+    <div *ngIf="searchActive && !products.length">
+      <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+    </div>
+
+   <!-- Visualización de categorías específicas -->
+<div *ngIf="viewingCategory && !searchActive">
+  <h2>Categoría Específica</h2>
+  <div class="row ">
+    <div class="col-6 col-md-4 mb-4  " *ngFor="let product of products">
+      <div class="card product-card h-100 ">
+        <img [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'"
+             alt="{{ product.name }}" class="product-image card-img-top">
+        <div class="card-body ">
+          <p class="card-title">{{ product.name }}</p>
+          <p class="card-text">
+            {{ product.price | currency }} 
+          </p>
+          <div *ngIf="product.options?.length">
+            <div *ngFor="let option of product.options" class="option-button-container">
+              <button
+                [ngClass]="{
+                  'option-selected': selectedOptions[+product.id]?.description === option.description
+                }"
+                class="btn btn  option-button"
+                (click)="selectOption(product, option)">
+                {{ option.description }} - {{ option.price | currency }}
+              </button>
+            </div>
+          </div>
+          <button *ngIf="!product.options?.length" class="btn btn-primary w-100" (click)="addToCart(product)">
+            Agregar
+          </button>
+          <button *ngIf="product.options?.length" class="btn btn-primary w-100 add-cart-button" (click)="addToCartWithOption(product)">
+            Agregar {{ selectedOptions[+product.id]?.description || '' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Secciones habituales cuando no se está buscando ni en una categoría específica -->
+    <div *ngIf="!searchActive && !viewingCategory">
+      <div *ngFor="let section of sections; let i = index" class="section">
+        <h3>{{ section.title }}</h3>
+        <div class="carousel-container">
+          
+          <div class="product-container" #carousel>
+            <div class="col-md-2 main-content pt-16" *ngFor="let product of section.products">
+              <div class="product-card">
+                <img [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'"
+                     alt="{{ product.name }}" class="product-image">
+                <div>
+                  <p>{{ product.name }}</p>
+                  <p>{{ product.price | currency }}</p>
+                  <div *ngIf="product.options?.length">
+                    <div *ngFor="let option of product.options" class="option-button-container">
+                      <button
+                        [ngClass]="{
+                          'option-selected': selectedOptions[+product.id]?.description === option.description
+                        }"
+                        class="btn btn-outline option-button"
+                        (click)="selectOption(product, option)"
+                      >
+                        {{ option.description }} - {{ option.price | currency }}
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    *ngIf="!product.options?.length"
+                    class="btn btn-primary add-cart-button"
+                    (click)="addToCart(product)"
+                  >
+                    Agregar
+                  </button>
+                  <button
+                    *ngIf="product.options?.length"
+                    class="btn btn-primary add-cart-button"
+                    (click)="addToCartWithOption(product)"
+                  >
+                    Agregar {{ selectedOptions[+product.id]?.description || '' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+                        <!-- Paginación -->
+            <div class="pagination-controls">
+              <button class="btn btn-secondary" 
+                      (click)="previousPage(section.title)" 
+                      [disabled]="paginationState[section.title]?.currentPage === 1">Anterior</button>
+              <span>Página {{ paginationState[section.title]?.currentPage }} de {{ paginationState[section.title]?.totalPages }}</span>
+              <button class="btn btn-secondary" 
+                      (click)="nextPage(section.title)" 
+                      [disabled]="paginationState[section.title]?.currentPage === paginationState[section.title]?.totalPages">Siguiente</button>
+            </div>
+          </div>
+          </div>
+      </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="footer mt-auto py-3">
+  <div class="container">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><a routerLink="/product-list" class="nav-link px-2 text-muted">Home</a></li>
+      <li class="nav-item"><a routerLink="/" class="nav-link px-2 text-muted">About</a></li>
+
+    </ul>
+    <p class="text-center text-muted">&copy; 2024 Meridiano 90 Maxcanú</p>
+  </div>
+</footer>

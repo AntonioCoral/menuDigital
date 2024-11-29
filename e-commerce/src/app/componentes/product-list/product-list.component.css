@@ -1,0 +1,220 @@
+/* Diseño general para pantallas grandes (Escritorio) */
+.main-container {
+  max-width: 1200px;
+  margin: 10%;
+  padding: 5px;
+  
+}
+
+/* Estilos para pantallas pequeñas (móviles) */
+/*Estilos generales para todos*/
+@media (max-width: 768px) {
+  .main-container {
+    max-width: 100%;
+    margin: 3%;
+    padding: 2px;
+    margin-top: 75%;
+    
+  }
+
+  .product-section {
+    margin-top: 0;
+    padding: 10px;
+    background: none;
+  }
+
+  .product-container {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .product-card {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    
+  }
+
+  .product-image {
+    height: 120px; /* Reduce el tamaño en móviles */
+  }
+
+  /* Botones de control en el carousel */
+  .carousel-inner{
+    margin-top: 25%;
+  }
+  .carousel-item active{
+    width: 80%;
+    height: 150px;
+  }
+  .carousel-control.right {
+    display: none; /* Ocultarlos en móviles si no se requieren */
+  }
+
+  .add-cart-button,
+  .option-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Ajustes para pantallas medianas (tabletas) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main-container {
+    max-width: 100%;
+    margin: 5%;
+  }
+
+  .product-container {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .product-card {
+    width: calc(50% - 20px); /* 2 productos por fila */
+    margin-bottom: 20px;
+  }
+
+  .product-image {
+    height: 180px;
+  }
+}
+
+/* Estilos generales */
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+/*Card Categorias especificas */
+.card {
+  min-height: 50px;
+  padding: 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
+
+.product-section {
+  position: relative;
+  margin-top: -280px;
+  z-index: 1;
+  background: linear-gradient(to top, rgb(238, 238, 238) 80%, rgba(212, 212, 212, 0.055) 100%);
+  padding: 0px;
+  
+}
+
+.product-container {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  gap: 5px;
+  padding-left: 10px;
+  padding-right: 20px;
+}
+
+.product-container::-webkit-scrollbar {
+  display: none;
+}
+/* Estilos globales de los cards afecta a todos, search, especific, section*/
+.product-card {
+  flex: 0 0 auto;
+  width: 180px;
+  height: 380px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+
+  transition: transform 0.3s ease; 
+}
+/* Add or modify these styles to change the selected border color to blue */
+.option-button {
+  flex: auto;
+  height: 5%;
+  width: 100%;
+  border-color: rgb(218, 218, 218);
+}
+
+.option-selected {
+  border-color: rgb(87, 87, 230) !important; /* Change the border color to blue */
+}
+
+
+/*Estilo del boton agregar cuando tiene opciones*/
+.add-cart-button {
+  margin-top: 2%;
+  width: 100%;
+  height: 40px;
+  
+ 
+}
+
+/* Footer */
+.footer {
+  background-color: #fff;
+  border-top: 1px solid #eaeaea;
+}
+
+.nav-link {
+  color: #6c757d;
+}
+
+.nav-link:hover {
+  color: #000;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #dee2e6;
+}
+/*Estilos de categorias especificas { */
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+
+
+.product-image {
+  width: 100%;
+  height: 150px; /* Resize image to a smaller height for consistency */
+  object-fit: cover;
+  
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 1rem; /* Smaller text for the product title */
+  margin-bottom: 0.5rem;
+  
+}
+.card-text {
+  font-size: 0.9rem; /* Smaller font for the product details */
+  
+}
+
+.add-cart-button, .btn-primary {
+  margin-top: 2%;
+  width: 100%;
+  height: 40px; /* Smaller button text */
+}
+
+/*Estilos de categorias especificas } */

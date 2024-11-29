@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "target": "ES6",                   // ES6 es una buena opción para la mayoría de los proyectos
+      "module": "commonjs",              // CommonJS para compatibilidad con Node.js
+      "outDir": "./dist",                // Directorio de salida para los archivos compilados
+      "rootDir": "./src",                // Directorio raíz de los archivos fuente
+      "strict": true,                    // Habilita todas las verificaciones estrictas
+      "esModuleInterop": true,           // Permite la interoperabilidad con los módulos ES
+    }
+  }
+  
