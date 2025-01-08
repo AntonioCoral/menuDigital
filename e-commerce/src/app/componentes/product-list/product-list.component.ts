@@ -8,6 +8,7 @@ import { Product, ProductOption } from '../../interfaces/producto';
 import { CartService } from '../../services/cart.service';
 import { combineLatest, debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { CarouselImage, CarouselService } from '../../services/carousel.service';
 
 @Component({
   selector: 'app-product-list',
@@ -21,12 +22,14 @@ export class ProductListComponent implements OnInit {
   viewingCategory: boolean = false;
   searchActive: boolean = false;  // Indica si la búsqueda está activa
   searchQuery: string = '';       // Almacena los términos de búsqueda actuales
-  selectedOptions: { [productId: number]: ProductOption } = {};
+  selectedOptions: { [productId: number]: ProductOption | undefined } = {};
+  selectedProduct: Product | null = null; // Producto seleccionado para mostrar en el modal
   currentPage: number = 2;  // Página actual
   totalPages: number = 1;
   limit: number = 7;        // Límite de productos por página
    // Crear un objeto para mantener el estado de la paginación por categoría
   paginationState: { [category: string]: { currentPage: number; totalPages: number } } = {};
+  carouselImages: CarouselImage[] = []; // Cambiar el tipo a CarouselImage[]
 
 
 
@@ -37,11 +40,19 @@ export class ProductListComponent implements OnInit {
     private categoryService: CategoryService,
     private toastr: ToastrService,
     private router: Router,
-    
+    private carouselService: CarouselService,
   ) {}
 
   ngOnInit(): void {
     // Observa los cambios en los parámetros de ruta y en los parámetros de consulta al mismo tiempo
+    this.carouselService.getImagesBySection('carousel').subscribe(
+      (images) => {
+        this.carouselImages = images; // Asignar las imágenes correctamente
+      },
+      (error) => {
+        console.error('Error al cargar imágenes del carrusel:', error);
+      }
+    );
     combineLatest([
       this.route.params,
       this.route.queryParams
@@ -96,6 +107,10 @@ export class ProductListComponent implements OnInit {
       }
     );
   }
+
+  
+
+  
 // Maneja el estado de la paginación por cada categoría
 loadProductsByCategoryy(categoria: string): void {
   const pagination = this.paginationState[categoria] || { currentPage: 1, totalPages: 1 };
@@ -131,45 +146,57 @@ previousPage(category: string): void {
 }
 
 loadSections(): void {
-  this.sections = [
-    { title: 'Vinos', products: [] },
-    { title: 'Licores fuertes', products: [] },
-    { title: 'Cervezas', products: [] }
-  ];
+  this.categoryService.getCategories().subscribe(
+    (categories) => {
+      this.sections = categories.map((category) => ({
+        title: category.name,
+        products: [],
+      }));
 
-  this.sections.forEach(section => {
-    this.paginationState[section.title] = { currentPage: 1, totalPages: 1 }; // Inicializamos la paginación
-    this.loadProductsByCategoryy(section.title); // Carga los productos con paginación
-  });
+      this.sections.forEach((section) => {
+        this.paginationState[section.title] = { currentPage: 1, totalPages: 1 }; // Inicializamos la paginación
+        this.loadProductsByCategoryy(section.title); // Carga los productos con paginación
+      });
+    },
+    (error) => {
+      console.error('Error al cargar las categorías:', error);
+    }
+  );
 }
 
-
-
-
-selectOption(product: Product, option: ProductOption) {
-  this.selectedOptions[+product.id] = option;  // Convierto explícitamente el id en número
-}
-
-addToCart(product: Product, option?: { price: number, description: string }): void {
-  if (option) {
-    console.log('Producto agregado al carrito con opción:', product, option);
-    // Ajusta la lógica según tus necesidades para manejar precios y descripciones de opciones
+openProductOptions(product: Product): void {
+  if (product.options?.length) {
+    this.selectedProduct = product;
   } else {
-    console.log('Producto agregado al carrito:', product);
-    this.cartService.addToCart(product);  // Agregar al carrito sin opciones
-    this.toastr.success(`Producto agregado al carrito!`, 'Éxito');
-
-    // Mostramos el mensaje Toastr en la misma página
+    this.addToCart(product);
   }
 }
 
+closeModal(): void {
+  this.selectedProduct = null;
+}
+
+selectOption(product: Product, option: ProductOption): void {
+  this.selectedOptions[Number(product.id)] = option;
+}
+
+addToCart(product: Product, option?: ProductOption): void {
+  if (option) {
+    this.cartService.addToCart(product, option);
+    this.toastr.success(`Añadido: ${product.name} - ${option.description}`, 'Éxito');
+  } else {
+    this.cartService.addToCart(product);
+    this.toastr.success(`Añadido: ${product.name}`, 'Éxito');
+  }
+  this.closeModal();
+}
+
 addToCartWithOption(product: Product): void {
-  const selectedOption = this.selectedOptions[+product.id];  // Convertir el id en número
+  const selectedOption = this.selectedOptions[Number(product.id)];
   if (selectedOption) {
-    // Agregar el producto con la opción seleccionada al carrito
-    this.cartService.addToCart(product, selectedOption);
-    // Mostrar el mensaje Toastr en la misma página
-    this.toastr.success(`Producto con opción agregado al carrito!`, 'Éxito');
+    this.addToCart(product, selectedOption);
+  } else {
+    this.toastr.error('Por favor, selecciona una opción', 'Error');
   }
 }
 

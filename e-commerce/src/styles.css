@@ -8,7 +8,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 body {
     background-color: #f5f5f5; /* Gris claro */
     margin: 0;
-    margin-top: 15%;
+    
     padding: 0px;
   }
   
@@ -23,7 +23,7 @@ body {
 
 /* Estilos para el toastr de éxito */
 .toast-success {
-  background-color: #2be734 !important; /* Color verde personalizado */
+  background-color: #fa6351 !important; /* Color verde personalizado */
   color: white !important;
 }
 
@@ -31,9 +31,7 @@ body {
 .toast-success .toast-progress {
   background-color: white !important;
 }
-.pt-16 {
-  padding-top: 2rem;
-}
+
 
 .toast-top-right {
   top: 20px !important;
@@ -44,9 +42,37 @@ body {
   top: 20px !important;
   left: 0 !important;
   right: 0 !important;
-  width: 10% !important;
+  width: 5% !important;
+}
+/* Ajustes específicos para pantallas grandes */
+@media (min-width: 1024px) {
+  body {
+    margin-top: 0; /* Elimina el espacio superior en pantallas grandes */
+  }
+  
+  .carousel-inner {
+    height: 800px; /* Altura fija para pantallas grandes */
+  }
+
+  .carousel-item img {
+    height: 800px; /* Asegura que la imagen llene el contenedor */
+  }
 }
 
+/* Ajustes para pantallas móviles */
+@media (max-width: 1024px) {
+  body {
+    margin-top: 8%; /* Espacio necesario para móviles */
+  }
+
+  .carousel-inner {
+    height: 220px; /* Altura más pequeña para pantallas móviles */
+  }
+
+  .carousel-item img {
+    height: 220px; /* Ajusta al contenedor móvil */
+  }
+}
 
 /* Estilos para el toastr de error */
 .toast-error {

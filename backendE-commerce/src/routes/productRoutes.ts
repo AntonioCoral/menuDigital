@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { createProduct, createProductsBulk, getProducts, getProductsByCategory, getProductsBySearch, updateProduct } from '../controllers/productController';
 import upload from '../middlewares/upload';
+import { authenticate } from '../middlewares/authMiddleware';
 
 const router = Router();
 
-router.post('/', upload.single('image'), createProduct); // Crear un nuevo producto con imagen
+router.post('/', authenticate, upload.single('image'), createProduct); // Crear un nuevo producto con imagen
 router.get('/', getProducts); // Obtener todos los productos
 router.post('/bulk', createProductsBulk); // Crear múltiples productos
 router.get('/category/:categoryId', getProductsByCategory); // Obtener productos por categoría

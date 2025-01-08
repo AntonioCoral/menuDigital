@@ -1,30 +1,18 @@
 <div id="adCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
-    <div class="carousel-item active">
+    <div 
+      *ngFor="let image of carouselImages; let i = index" 
+      class="carousel-item" 
+      [class.active]="i === 0"
+    >
       <div class="card mx-auto" style="width: 90%; height: 150px;">
-      <img src="./assets/servicios/promosTecatelight.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 1" >
+        <img [src]="image.imageUrl" class="card-img-top h-full w-full object-cover" [alt]="image.title">
+      </div>
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ image.title }}</h5>
+        <p>{{ image.description }}</p>
+      </div>
     </div>
-  </div>
-    <div class="carousel-item">
-      <div class="card mx-auto" style="width: 90%; height: 150px;">
-      <img src="./assets/servicios/promosixxx.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 2" >
-    </div>
-  </div>
-    <div class="carousel-item">
-      <div class="card mx-auto" style="width: 90%; height: 150px;">
-      <img src="./assets/servicios/promosixtecatecero.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 3" >
-    </div>
-  </div>
-    <div class="carousel-item">
-      <div class="card mx-auto" style="width: 90%; height: 150px;">
-      <img src="./assets/servicios/promomisiltecoriginal.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 3" >
-    </div>
-  </div>
-  <div class="carousel-item">
-    <div class="card mx-auto" style="width: 90%; height: 150px;">
-    <img src="./assets/servicios/promomisiltec.jpg" class="card-img-top h-full w-full object-cover" alt="Anuncio 3" >
-  </div>
-</div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#adCarousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -36,46 +24,34 @@
   </button>
 </div>
 
+
 <!-- Sección de productos superpuesta sobre el carrusel -->
 <div class="product-section ">
   <div class="main-container main-content pt-16">
     <!-- Resultados de búsqueda -->
     <div *ngIf="searchActive && products.length">
       <div class="row">
-        <div *ngFor="let product of products" class="col-6 col-md-4 mb-4 ">
+        <div *ngFor="let product of products" class="col-6 col-md-4 mb-4">
           <div class="card product-card h-100">
             <img [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'"
                  alt="{{ product.name }}" class="product-image">
-            <div>
-              <h5>{{ product.name }}</h5>
-              <p> {{ product.price | currency }}</p>
+            <!-- Cuerpo de la tarjeta -->
+          <div class="card-body">
+            <!-- Nombre del producto con recorte si es muy largo -->
+            <p class="card-title truncate">{{ product.name }}</p>
+  
+            <!-- Precio del producto -->
+            <p class="card-text">{{ product.price | currency }}</p>
               <div *ngIf="product.options?.length">
                 <div *ngFor="let option of product.options" class="option-button-container">
-                  <button
-                    [ngClass]="{
-                      'option-selected': selectedOptions[+product.id]?.description === option.description
-                    }"
-                    class="btn btn  option-button"
-                    (click)="selectOption(product, option)"
-                  >
-                    {{ option.description }} - {{ option.price | currency }}
-                  </button>
                 </div>
               </div>
-              <button
-                *ngIf="!product.options?.length"
-                class="btn btn-primary option-button"
-                (click)="addToCart(product)"
-              >
-                Agregar
-              </button>
-              <button
-                *ngIf="product.options?.length"
-                class="btn btn-primary add-cart-button"
-                (click)="addToCartWithOption(product)"
-              >
-                Agregar {{ selectedOptions[+product.id]?.description || 'al carrito' }}
-              </button>
+              <button 
+                    class="btn btn-primary w-100" 
+                   (click)="openProductOptions(product)">
+                    Agregar
+                  </button>
+              
             </div>
           </div>
         </div>
@@ -88,89 +64,74 @@
     </div>
 
    <!-- Visualización de categorías específicas -->
-<div *ngIf="viewingCategory && !searchActive">
-  <h2>Categoría Específica</h2>
-  <div class="row ">
-    <div class="col-6 col-md-4 mb-4  " *ngFor="let product of products">
-      <div class="card product-card h-100 ">
-        <img [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'"
-             alt="{{ product.name }}" class="product-image card-img-top">
-        <div class="card-body ">
-          <p class="card-title">{{ product.name }}</p>
-          <p class="card-text">
-            {{ product.price | currency }} 
-          </p>
-          <div *ngIf="product.options?.length">
-            <div *ngFor="let option of product.options" class="option-button-container">
-              <button
-                [ngClass]="{
-                  'option-selected': selectedOptions[+product.id]?.description === option.description
-                }"
-                class="btn btn  option-button"
-                (click)="selectOption(product, option)">
-                {{ option.description }} - {{ option.price | currency }}
-              </button>
-            </div>
+   <div *ngIf="viewingCategory && !searchActive">
+    <div class="row">
+      <div class="col-6 col-md-4 mb-4" *ngFor="let product of products">
+        <div class="card product-card h-100">
+          <!-- Imagen del producto -->
+          <img 
+            [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'" 
+            alt="{{ product.name }}" 
+            class="product-image"
+          />
+  
+          <!-- Cuerpo de la tarjeta -->
+          <div class="card-body">
+            <!-- Nombre del producto con recorte si es muy largo -->
+            <p class="card-title truncate">{{ product.name }}</p>
+  
+            <!-- Precio del producto -->
+            <p class="card-text">{{ product.price | currency }}</p>
+  
+            <!-- Botón Agregar Producto -->
+            <button 
+              class="btn btn-primary w-100 mt-auto" 
+              (click)="openProductOptions(product)">
+              Agregar
+            </button>
           </div>
-          <button *ngIf="!product.options?.length" class="btn btn-primary w-100" (click)="addToCart(product)">
-            Agregar
-          </button>
-          <button *ngIf="product.options?.length" class="btn btn-primary w-100 add-cart-button" (click)="addToCartWithOption(product)">
-            Agregar {{ selectedOptions[+product.id]?.description || '' }}
-          </button>
         </div>
       </div>
     </div>
   </div>
-</div>
+  
 
 
 
     <!-- Secciones habituales cuando no se está buscando ni en una categoría específica -->
     <div *ngIf="!searchActive && !viewingCategory">
       <div *ngFor="let section of sections; let i = index" class="section">
-        <h3>{{ section.title }}</h3>
+        <h3 class="section-title">{{ section.title }}</h3>
         <div class="carousel-container">
-          
           <div class="product-container" #carousel>
-            <div class="col-md-2 main-content pt-16" *ngFor="let product of section.products">
-              <div class="product-card">
-                <img [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'"
-                     alt="{{ product.name }}" class="product-image">
-                <div>
-                  <p>{{ product.name }}</p>
-                  <p>{{ product.price | currency }}</p>
-                  <div *ngIf="product.options?.length">
-                    <div *ngFor="let option of product.options" class="option-button-container">
-                      <button
-                        [ngClass]="{
-                          'option-selected': selectedOptions[+product.id]?.description === option.description
-                        }"
-                        class="btn btn-outline option-button"
-                        (click)="selectOption(product, option)"
-                      >
-                        {{ option.description }} - {{ option.price | currency }}
-                      </button>
-                    </div>
-                  </div>
-                  <button
-                    *ngIf="!product.options?.length"
-                    class="btn btn-primary add-cart-button"
-                    (click)="addToCart(product)"
-                  >
+            <div class=" main-content pt-16" *ngFor="let product of section.products">
+              <div class="card product-card h-100">
+                <!-- Imagen del producto -->
+                <img 
+                  [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'" 
+                  alt="{{ product.name }}" 
+                  class="product-image"
+                />
+    
+                <!-- Cuerpo de la tarjeta -->
+                <div class="card-body">
+                  <!-- Nombre del producto con recorte si es muy largo -->
+                  <p class="card-title truncate">{{ product.name }}</p>
+    
+                  <!-- Precio del producto -->
+                  <p class="card-text">{{ product.price | currency }}</p>
+    
+                  <!-- Botón Agregar -->
+                  <button 
+                    class="btn btn-primary w-100 mt-auto" 
+                    (click)="openProductOptions(product)">
                     Agregar
-                  </button>
-                  <button
-                    *ngIf="product.options?.length"
-                    class="btn btn-primary add-cart-button"
-                    (click)="addToCartWithOption(product)"
-                  >
-                    Agregar {{ selectedOptions[+product.id]?.description || '' }}
                   </button>
                 </div>
               </div>
             </div>
           </div>
+          
           
         </div>
                         <!-- Paginación -->
@@ -188,6 +149,55 @@
       </div>
 </div>
 
+<!-- Modal -->
+<div *ngIf="selectedProduct" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-md relative">
+    <!-- Botón cerrar -->
+    <button 
+      class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+      (click)="closeModal()"
+    >
+      &times;
+    </button>
+
+    <!-- Imagen y nombre -->
+    <img 
+      [src]="selectedProduct.image ? ('https://codeconnectivity.com/apilinea/uploads/' + selectedProduct.image) : 'assets/logo2.png'" 
+      alt="{{ selectedProduct.name }}" 
+      class="mx-auto h-32 w-32 object-cover rounded-md"
+    />
+    <h2 class="text-lg font-semibold mt-4 text-center">{{ selectedProduct.name }}</h2>
+    <p class="text-gray-600 text-center mb-4">{{ selectedProduct.price | currency }}</p>
+
+    <!-- Opciones del Producto -->
+<div *ngIf="selectedProduct.options?.length">
+  <p class="text-sm font-semibold mb-2">Opciones:</p>
+  <div *ngFor="let option of selectedProduct.options" class="mb-2">
+    <button 
+      [ngClass]="{ 
+        'bg-blue-500 text-white': selectedOptions[+selectedProduct.id]?.description === option.description 
+      }"
+      class="btn btn-outline w-full"
+      (click)="selectOption(selectedProduct, option)"
+    >
+      {{ option.description }} - {{ option.price | currency }}
+    </button>
+  </div>
+</div>
+
+
+    <!-- Botón agregar al carrito -->
+    <button 
+      class="bg-green-500 text-white py-2 px-4 w-full rounded-md hover:bg-green-600 transition duration-200 mt-4"
+      (click)="addToCartWithOption(selectedProduct)"
+    >
+      Agregar al Carrito
+    </button>
+  </div>
+</div>
+
+
+
 
 <!-- Footer -->
 <footer class="footer mt-auto py-3">
@@ -197,6 +207,6 @@
       <li class="nav-item"><a routerLink="/" class="nav-link px-2 text-muted">About</a></li>
 
     </ul>
-    <p class="text-center text-muted">&copy; 2024 Meridiano 90 Maxcanú</p>
+    <p class="text-center text-muted">&copy; 2025 Connectivity Code</p>
   </div>
 </footer>

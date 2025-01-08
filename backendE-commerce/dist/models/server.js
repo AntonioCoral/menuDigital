@@ -22,6 +22,8 @@ const productRoutes_1 = __importDefault(require("../routes/productRoutes"));
 const categoryRoutes_1 = __importDefault(require("../routes/categoryRoutes"));
 const productOptions_1 = __importDefault(require("../routes/productOptions"));
 const path_1 = __importDefault(require("path"));
+const carouselRoutes_1 = __importDefault(require("../routes/carouselRoutes"));
+const contactInfoRoutes_1 = __importDefault(require("../routes/contactInfoRoutes"));
 dotenv_1.default.config();
 class Server {
     constructor() {
@@ -52,6 +54,8 @@ class Server {
         this.app.use('/api/products', productRoutes_1.default);
         this.app.use('/api/categories', categoryRoutes_1.default);
         this.app.use('/api/productOptions', productOptions_1.default); // Rutas de opciones de precios
+        this.app.use('/api/carousel', carouselRoutes_1.default); //Rutas para imagenes del carousel 
+        this.app.use('/api/contact', contactInfoRoutes_1.default); //Ruta para informacion de contacto
     }
     middlewares() {
         this.app.use(express_1.default.json());

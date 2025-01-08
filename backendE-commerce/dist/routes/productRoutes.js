@@ -6,8 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const productController_1 = require("../controllers/productController");
 const upload_1 = __importDefault(require("../middlewares/upload"));
+const authMiddleware_1 = require("../middlewares/authMiddleware");
 const router = (0, express_1.Router)();
-router.post('/', upload_1.default.single('image'), productController_1.createProduct); // Crear un nuevo producto con imagen
+router.post('/', authMiddleware_1.authenticate, upload_1.default.single('image'), productController_1.createProduct); // Crear un nuevo producto con imagen
 router.get('/', productController_1.getProducts); // Obtener todos los productos
 router.post('/bulk', productController_1.createProductsBulk); // Crear múltiples productos
 router.get('/category/:categoryId', productController_1.getProductsByCategory); // Obtener productos por categoría

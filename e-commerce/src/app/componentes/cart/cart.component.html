@@ -1,17 +1,22 @@
-<div class="container mt-5 main-content pt-16">
+<div class="card">
+<div class="container mt-1 main-content pt-14">
+  <div class="card-header" style="width: auto;">
   <h1>Carrito de Compras</h1>
+</div>
+<div class="card-body">
   <div *ngIf="items.length > 0; else emptyCart">
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Producto</th>
+            <th>Productos</th>
             <th>Precio</th>
-            <th>Cantidad</th>
+            <th>U.</th>
             <th>Total</th>
-            <th>Acciones</th> <!-- Nueva columna para los botones de acción -->
+            <th></th> <!-- Nueva columna para los botones de acción -->
           </tr>
         </thead>
+  
         <tbody>
           <tr *ngFor="let item of items">
             <td>{{ item.product.name }}</td>
@@ -21,24 +26,34 @@
             <td>
               
               <!-- Botón para disminuir la cantidad -->
-              <button class="btn " (click)="decreaseQuantity(item.product)">
-                <img src="assets/icons/decrease.png" alt="" style="height: 25px;"> <!-- Icono de disminuir --> 
+              <button class="ml-2 text-blue-400 focus:outline-none" (click)="decreaseQuantity(item.product)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                 <!-- Icono de disminuir --> 
               </button>
               
               <!-- Botón para aumentar la cantidad -->
-              <button class="btn" (click)="increaseQuantity(item.product)">
-                <img src="assets/icons/add.png" alt="" style="height: 25px;"> <!-- Icono de incrementar --> 
+              <button class="ml-2 text-blue-500 focus:outline-none" (click)="increaseQuantity(item.product)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                 <!-- Icono de incrementar --> 
               </button>
 
                <!-- Botón para eliminar el producto -->
-               <button class="btn" (click)="removeItem(item.product)">
-                <img src="assets/icons/remove.png" alt="" style="height: 25px;"> <!-- Icono de eliminar -->
+               <button class="ml-2 text-blue-500 focus:outline-none" (click)="removeItem(item.product)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                 <!-- Icono de eliminar -->
               </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
     <div class="mt-4">
       <p><strong>Total de productos:</strong> {{ totalQuantity }}</p>
       <p><strong>Precio total:</strong> {{ totalPrice | currency }}</p>
@@ -49,44 +64,124 @@
     <p>Tu carrito está vacío</p>
   </ng-template>
 </div>
+</div>
 
  <!-- Modal -->
  <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="orderModalLabel">Detalles de la Orden</h5>
+        <h5 class="modal-title" id="orderModalLabel">Realizar Pedido</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="name" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name">
-          </div>
-          <div class="mb-3">
-            <label for="address" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="address" [(ngModel)]="address" name="address">
-          </div>
-          <div class="mb-3">
-            <label for="phone" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control" id="phone" [(ngModel)]="phone" name="phone">
-          </div>
-          <div class="mb-3">
-              <label for="pagas" class="form-label">Con cuanto pagas</label>
-              <input type="number" class="form-control" id="pagas" [(ngModel)]="paga" name="paga">
+        <!-- Barra de progreso -->
+        <div class="progress-container">
+  <div class="progress-bar-line">
+    <div class="progress" [style.width.%]="(step / 3) * 100"></div>
+  </div>
+  <div class="progress-steps">
+    <span
+      *ngFor="let s of [1, 2, 3]; let i = index"
+      class="step"
+      [class.active]="step >= s"
+    >
+      {{ s }}
+    </span>
+  </div>
+</div>
+
+        
+
+        <!-- Paso 1: Información del cliente -->
+        <div *ngIf="step === 1">
+          <form> 
+            <h5 class="font-semibold text-center">Información del cliente</h5>
+            <div class="mb-3 font-sans">
+              <label for="name" class="form-label">Nombre </label>
+              <input placeholder="Ingresa tu nombre" type="text" class="form-control" id="name" [(ngModel)]="name" name="name" required>
             </div>
-        </form>
+            <div class="mb-3 font-sans">
+              <label for="phone" class="form-label">Teléfono</label>
+              <input placeholder="Ingresa tu numero de télefono" type="tel" class="form-control" id="phone" [(ngModel)]="phone" name="phone" required>
+            </div>
+            <div class="mb-3 font-sans">
+              <label for="address" class="form-label">Dirección</label>
+              <input placeholder="Ingresa tu dirección" type="text" class="form-control" id="address" [(ngModel)]="address" name="address">
+              <button type="button" class="btn btn-info mt-2" (click)="fetchLocation()">Obtener Ubicación</button>
+              <p *ngIf="locationUrl">Ubicación: <a href="{{ locationUrl }}" target="_blank">Ver en Maps</a></p>
+            </div>
+          </form>
+        </div>
+        
+        
+
+        <!-- Paso 2: Método de pago -->
+<div *ngIf="step === 2">
+  <h5 class="font-semibold text-center">Método de Pago</h5>
+  <div class="font-sans">
+    <label>
+      <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="efectivo">
+      Efectivo
+    </label>
+    <div *ngIf="paymentMethod === 'efectivo'" class="mt-3">
+      <label for="paga" class="form-label">¿Con cuánto pagas?</label>
+      <input type="number" class="form-control" id="paga" [(ngModel)]="paga" name="paga">
+      <p>Total del carrito: {{ totalPrice | currency }}</p>
+    </div>
+
+    <label class="mt-3">
+      <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="transferencia">
+      Transferencia Bancaria
+    </label>
+    <div *ngIf="paymentMethod === 'transferencia'" class="mt-3">
+      <!-- Tarjeta para la información bancaria -->
+      <div class="cardBancaria p-4 rounded-lg shadow-lg bg-gradient-to-r from-yellow-300 to-red-400 text-white">
+        <h6 class="text-lg font-bold mb-2">Información Bancaria</h6>
+        <div class="flex items-center justify-between mb-2">
+          <span><strong>Titular:</strong> {{ accountHolder }}</span>
+          <button class="btn btn-sm bg-white text-black rounded" (click)="copyToClipboard(accountHolder)">
+            Copiar
+          </button>
+        </div>
+        <div class="flex items-center justify-between mb-2">
+          <span><strong>Banco:</strong> {{ bankName }}</span>
+          <button class="btn btn-sm bg-white text-black rounded" (click)="copyToClipboard(bankName)">
+            Copiar
+          </button>
+        </div>
+        <div class="flex items-center justify-between mb-2">
+          <span><strong>CLABE:</strong> {{ clabe }}</span>
+          <button class="btn btn-sm bg-white text-black rounded" (click)="copyToClipboard(clabe)">
+            Copiar
+          </button>
+        </div>
+        <div class="flex items-center justify-between">
+          <span><strong>Número de Tarjeta:</strong> {{ bankAccount }}</span>
+          <button class="btn btn-sm bg-white text-black rounded" (click)="copyToClipboard(bankAccount)">
+            Copiar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <!-- Paso 3: Confirmación -->
+        <div *ngIf="step === 3">
+          <h5 class="font-semibold m-3 text-center mt-4">Resumen de tu Orden</h5>
+          <p><strong>Nombre:</strong> {{ name }}</p>
+          <p><strong>Teléfono:</strong> {{ phone }}</p>
+          <p><strong>Dirección:</strong> {{ address }}</p>
+          <p><strong>Método de Pago:</strong> {{ paymentMethod }}</p>
+          <p><strong>Total:</strong> {{ totalPrice | currency }}</p>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <a [href]="getWhatsAppLink()" target="_blank">
-          <button type="button" class="btn btn-primary">Enviar a WhatsApp</button>
-        </a>
-        <div class="mb-3">
-          <button type="button" class="btn btn-info" (click)="fetchLocation()">Obtener Ubicación</button>
-          <p *ngIf="locationUrl">Ubicación: <a href="{{ locationUrl }}" target="_blank">Ver en Maps</a></p>
-        </div>
+        <button type="button" class="btn btn-secondary" (click)="previousStep()" *ngIf="step > 1">Regresar</button>
+        <button type="button" class="btn btn-primary" (click)="nextStep()" *ngIf="step < 3">Siguiente</button>
+        <button type="button" class="btn btn-success" *ngIf="step === 3" (click)="submitOrder()">Realizar Orden</button>
       </div>
     </div>
   </div>

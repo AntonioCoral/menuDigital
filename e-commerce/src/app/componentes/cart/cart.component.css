@@ -1,0 +1,82 @@
+/* Contenedor principal de la barra de progreso */
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+  }
+  .btn-primary{
+    background-color: rgb(241, 203, 33);
+    border: none;
+  }
+  /* Card bancaria*/
+  .cardBancaria {
+    background: linear-gradient(to right, #f0de3a, #C62828);
+    color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  /* Botón "Copiar" */
+.btn {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #ffcc00;
+  color: black;
+}
+  
+  /* Línea de la barra de progreso */
+  .progress-bar-line {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  /* Progreso dinámico */
+  .progress {
+    position: absolute;
+    height: 100%;
+    background: linear-gradient(90deg, #fab31a, #e2d845);
+    transition: width 0.3s ease-in-out;
+  }
+  
+  /* Pasos de la barra */
+  .progress-steps {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .step {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #ddd;
+    color: #fff;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Estado activo */
+  .step.active {
+    background-color: #f59910;
+    color: #fff;
+  }
+
+  
+  

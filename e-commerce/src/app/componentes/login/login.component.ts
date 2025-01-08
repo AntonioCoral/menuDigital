@@ -1,7 +1,10 @@
 // src/app/components/home/home.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { CarouselImage, CarouselService } from '../../services/carousel.service';
+import { ConfigService } from './../../services/config.service';
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../interfaces/category';
 @Component({
   selector: 'app-home',
   templateUrl: './login.component.html',
@@ -16,33 +19,68 @@ export class LoginComponent implements OnInit {
     { title: 'Promo misil XX', image: 'promomisilxx.jpg' }
   ];
 
-  categories: any[] = [
-    { title: 'Vinos', image: 'abarrotes.jpg' },
-    { title: 'Licores fuertes', image: 'papeleria.jpg' },
-    { title: 'Cervezas', image: 'ferreteria.png' },
-    { title: 'Accesorios para cocteles', image: 'carnes.jpg' },
-    
-  ];
+  categories: Category[] = []; // Almacena las categorías dinámicamente
+  carouselImages: CarouselImage[] = []; // Cambiar el tipo a CarouselImage[]
+  featuredProducts: any;
+  category: Category[] = [];
+  openedTime: string = '';
 
-  constructor(private router: Router) { }
+
+  constructor(
+    private router: Router,
+    private carouselService: CarouselService,
+    private categoryService: CategoryService,
+    private ConfigService: ConfigService,
+  ) { }
 
   ngOnInit(): void {
-    // Verificar si el usuario ya ha confirmado su edad
-    const ageConfirmed = localStorage.getItem('ageConfirmed');
-    if (ageConfirmed === 'true') {
-      this.showAgeConfirmation = false;
+    this.loadCategories(),
+    this.loadContactInfo(),
+    // Observa los cambios en los parámetros de ruta y en los parámetros de consulta al mismo tiempo
+    this.carouselService.getImagesBySection('home').subscribe(
+      (images) => {
+        this.carouselImages = images; // Asignar las imágenes correctamente
+      },
+      (error) => {
+        console.error('Error al cargar imágenes del carrusel:', error);
+      },
+    );
+  }
+  // Carga las categorías desde la base de datos
+  loadCategories(): void {
+    this.categoryService.getCategories().subscribe(
+      (categories: Category[]) => {
+        this.categories = categories || []; // Asegura que siempre sea un arreglo
+      },
+      (error) => {
+        console.error('Error al cargar las categorías', error);
+        this.categories = []; // Proporciona un arreglo vacío en caso de error
+      }
+    );
+  }
+  
+  
+  
+  
+  // Cargar la información de contacto
+  loadContactInfo(): void {
+    this.ConfigService.getContactInfo().subscribe(
+      (response) => {
+        this.openedTime = response?.openedTime || '';
+      },
+      (error) => {
+        console.error('Error al cargar la información de contacto:', error);
+      }
+    );
+  }
+
+  // Navega a la categoría seleccionada
+  navigateToCategory(categoria: any): void {
+    if (!categoria) {
+      console.error('El categoryId no está definido');
+      return;
     }
-  }
-
-  confirmAge(): void {
-    // Guardar la confirmación en el almacenamiento local
-    localStorage.setItem('ageConfirmed', 'true');
-    this.showAgeConfirmation = false;
-  }
-
-  decline(): void {
-    // Redirigir al usuario o cerrar el sitio si no confirma su edad
-    alert('Debes ser mayor de 18 años para ingresar al sitio.');
-    window.location.href = 'https://www.google.com'; // Cambia la URL si prefieres otro sitio de salida
+    this.router.navigate(['/categorias', categoria.name]);
   }
 }
+

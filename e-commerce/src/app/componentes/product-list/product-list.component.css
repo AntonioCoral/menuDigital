@@ -5,6 +5,46 @@
   padding: 5px;
   
 }
+.btn-primary{
+  background-color: rgb(241, 203, 33);
+  border: none;
+}
+
+
+/* Reducir margen inferior entre títulos y productos */
+.section-title {
+  font-size: 1.5rem;
+  font-weight:500;
+  margin-bottom: 10px; /* Reduce el espacio entre el título y los productos */
+}
+.section{
+  margin: 11px;
+}
+.card-text {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #21973d; /* Verde para el precio */
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.product-image {
+  width: 100%;
+  height: 180px; /* Ajusta según tu diseño */
+  object-fit: cover;
+  display: block;
+}
+
+/* Ajustar el margen entre las tarjetas de producto */
+.product-container {
+  margin-top: 0; /* Elimina cualquier margen superior adicional */
+  gap: 10px; /* Reduce la separación entre las tarjetas */
+}
+.pagination-controls{
+  justify-content: space-between;
+  display: flex;
+  margin: 15px;
+  padding: 1rem;
+}
 
 /* Estilos para pantallas pequeñas (móviles) */
 /*Estilos generales para todos*/
@@ -21,6 +61,7 @@
     margin-top: 0;
     padding: 10px;
     background: none;
+    
   }
 
   .product-container {
@@ -29,14 +70,47 @@
   }
 
   .product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
+    height: 350px; /* Altura fija para mantener uniformidad */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
     padding: 15px;
-    margin-bottom: 10px;
-    
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
   }
+  
+  
 
   .product-image {
-    height: 120px; /* Reduce el tamaño en móviles */
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  .card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+    /* Precio del producto */
+  .card-text {
+    font-size: 1rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+  }
+
+  /* Botón "Agregar" */
+  .btn-primary {
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 10px 0;
   }
 
   /* Botones de control en el carousel */
@@ -57,6 +131,7 @@
     padding: 10px;
   }
 }
+
 
 /* Ajustes para pantallas medianas (tabletas) */
 @media (min-width: 769px) and (max-width: 1024px) {

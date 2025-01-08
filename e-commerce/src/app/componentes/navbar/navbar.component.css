@@ -8,7 +8,7 @@
 
 /* Change button styles to match your theme */
 .btn-outline-primary {
-  color: #007bff;
+  color: #C62828;
   border-color: #007bff;
 }
 
@@ -16,7 +16,9 @@
   background-color: #007bff;
   color: white;
 }
-
+.background {
+  background-color: red;
+}
 /* Adjust dropdown menu styles if needed */
 .dropdown-menu {
   background-color: #f8f9fa;

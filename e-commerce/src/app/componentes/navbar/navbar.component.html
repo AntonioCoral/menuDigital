@@ -1,4 +1,4 @@
-<nav class="bg-blue-500 p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50">
+<nav class="background p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50">
   <!-- Botón de hamburguesa o flecha de regreso -->
   <div>
     <ng-container *ngIf="!isCartPage; else backButton">
@@ -42,9 +42,9 @@
 
   <!-- Botón del carrito -->
   <button class="text-white focus:outline-none ml-4" (click)="verCarrito()">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l1 5h13l1-5h2M16 16a4 4 0 100-8 4 4 0 000 8zm-6 0a4 4 0 100-8 4 4 0 000 8z" />
-    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+    </svg>    
     <span *ngIf="carrito.length" class="text-sm bg-red-500 text-white rounded-full px-2">{{ carrito.length }}</span>
   </button>
 </nav>

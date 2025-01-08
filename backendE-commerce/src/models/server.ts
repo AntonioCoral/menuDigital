@@ -8,6 +8,8 @@ import productRoutes from '../routes/productRoutes';
 import categoryRoutes from '../routes/categoryRoutes';
 import ProductOption from '../routes/productOptions';
 import path from 'path';
+import carouselRoutes from '../routes/carouselRoutes';
+import contactInfoRoutes from '../routes/contactInfoRoutes';
 
 dotenv.config();
 
@@ -49,6 +51,8 @@ class Server {
         this.app.use('/api/products', productRoutes);
         this.app.use('/api/categories', categoryRoutes);
         this.app.use('/api/productOptions', ProductOption); // Rutas de opciones de precios
+        this.app.use('/api/carousel', carouselRoutes); //Rutas para imagenes del carousel 
+        this.app.use('/api/contact', contactInfoRoutes);//Ruta para informacion de contacto
     }
 
   private middlewares(){

@@ -7,25 +7,32 @@ import { Product, ProductOption } from '../interfaces/producto';
 export class CartService {
   private items: { product: Product; quantity: number }[] = [];
 
-  // Función para agregar productos al carrito, con opción para incluir opciones de productos
-  addToCart(product: Product, option?: ProductOption): void {
-    // Creamos un identificador único para el producto, que puede incluir una opción si está presente
+   // Función para agregar productos al carrito, con opción para incluir opciones
+   addToCart(product: Product, option?: ProductOption): void {
+    // Crear un identificador único si hay una opción seleccionada
     const productId = option ? `${product.id}-${option.description}` : product.id;
 
-    // Buscar el producto en el carrito
+    // Buscar si ya existe el producto con esa opción en el carrito
     const item = this.items.find((item) => item.product.id === productId);
 
     if (item) {
-      // Si ya está en el carrito, aumentar la cantidad
+      // Si ya existe, aumentar la cantidad
       item.quantity += 1;
     } else {
-      // Si no está en el carrito, añadirlo
+       // Convertir precios a números y calcular el precio total correctamente
+    const basePrice = Number(product.price) || 0; // Asegura que sea un número
+    const optionPrice = option ? Number(option.price) || 0 : 0; // Asegura que sea un número
+    const totalPrice = basePrice + optionPrice; // Sumar precios
+
+      // Crear un nuevo objeto de producto
       const productToAdd: Product = {
         ...product,
-        id: productId,  // Mantener como string si tiene opción
-        price: option ? option.price : product.price  // Usar precio de opción si está disponible
+        id: productId,
+        price: totalPrice, // Precio sumado
+        name: option ? `${product.name} - ${option.description}` : product.name, // Añadir descripción de la opción
       };
 
+      // Agregar al carrito
       this.items.push({ product: productToAdd, quantity: 1 });
     }
   }

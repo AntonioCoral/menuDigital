@@ -1,3 +1,4 @@
+import { ConfigService } from './../../services/config.service';
 import { ProductsService } from './../../services/producto..service';
 // src/app/components/cart/cart.component.ts
 import { Component, OnInit } from '@angular/core';
@@ -17,12 +18,50 @@ export class CartComponent implements OnInit {
   address: string = '';
   phone: string = '';
   paga: string = '';
+  paymentMethod: string = ''
   locationUrl: string = '';  // Almacena la URL de Google Maps
+  step: number = 1; // Paso inicial del modal
+  phoneNumber: string = ''; // Variable para almacenar el número de teléfono dinámico
+  bankAccount: string = '';
+  clabe: string = '';
+  bankName: string = '';
+  accountHolder: string = '';
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private ConfigService: ConfigService,
+  ) {}
 
   ngOnInit(): void {
     this.updateCartInfo();
+    this.loadPhoneNumber();
+    this.loadContactInfo();
+  }
+
+  // Cargar el número de teléfono desde la base de datos
+  loadPhoneNumber(): void {
+    this.ConfigService.getPhoneNumber().subscribe(
+      (response) => {
+        this.phoneNumber = response?.phoneNumber || '';
+      },
+      (error) => {
+        console.error('Error al cargar el número de teléfono:', error);
+      }
+    );
+  }
+  // Cargar la información de contacto
+  loadContactInfo(): void {
+    this.ConfigService.getContactInfo().subscribe(
+      (response) => {
+        this.bankAccount = response?.bankAccount || '';
+        this.clabe = response?.clabe || '';
+        this.bankName = response?.bankName;
+        this.accountHolder = response?.accountHolder || '';
+      },
+      (error) => {
+        console.error('Error al cargar la información de contacto:', error);
+      }
+    );
   }
 
   // Actualizar la información del carrito
@@ -30,6 +69,17 @@ export class CartComponent implements OnInit {
     this.items = this.cartService.getItems();
     this.totalQuantity = this.cartService.getTotalQuantity();
     this.totalPrice = this.cartService.getTotalPrice();
+  }
+  nextStep(): void {
+    if (this.step < 3) {
+      this.step++;
+    }
+  }
+
+  previousStep(): void {
+    if (this.step > 1) {
+      this.step--;
+    }
   }
 
   // Eliminar un producto del carrito
@@ -51,18 +101,36 @@ export class CartComponent implements OnInit {
   }
 
   getWhatsAppLink(): string {
-    const phoneNumber = '529991508240';
-    let message = `Orden de ${this.name}\nDirección: ${this.address}\nTeléfono: ${this.phone}\nPaga: ${this.paga}\nUbicación: ${this.locationUrl}\n\n`;
-    message += 'Tu carrito de compras:\n\n';
-
-    this.items.forEach(item => {
-      message += `Producto: ${item.product.name}\nCantidad: ${item.quantity}\nPrecio: $${item.product.price}\n\n`;
+    if (!this.phoneNumber) {
+      return ''; // Si no hay número, evita crear el enlace
+    }
+  
+    // Encabezado con emojis
+    let message = `🛒 *Orden de Compra* 🛒\n\n`;
+    message += `👤 *Nombre:* ${this.name}\n📞 *Teléfono:* ${this.phone}\n🏠 *Dirección:* ${this.address}\n📍 *Ubicación:* ${this.locationUrl}\n💳 *Método de Pago:* ${this.paymentMethod}\n`;
+  
+    // Detalle del método de pago
+    if (this.paymentMethod === 'efectivo') {
+      message += `💵 *Pagará con:* ${this.paga}\n`;
+    } else if (this.paymentMethod === 'transferencia') {
+      message += `🏦 *Realizará el pago por transferencia.*\n`;
+    }
+  
+    // Separador para los productos
+    message += `\n🛍️ *Productos en el carrito:*\n`;
+    this.items.forEach((item, index) => {
+      message += `\n${index + 1}. 🛒 *Producto:* ${item.product.name}\n   📦 *Cantidad:* ${item.quantity}\n   💲 *Precio:* ${item.product.price}\n`;
     });
-    message += `Total: $${this.totalPrice}`;
-
+  
+    // Total de la compra
+    message += `\n💰 *Total:* ${this.totalPrice}\n`;
+  
+    // Generar el enlace de WhatsApp
     const encodedMessage = encodeURIComponent(message);
-    return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+    return `https://api.whatsapp.com/send?phone=${this.phoneNumber}&text=${encodedMessage}`;
   }
+  
+
 
   fetchLocation(): void {
     if (navigator.geolocation) {
@@ -75,4 +143,27 @@ export class CartComponent implements OnInit {
       alert('Geolocalización no soportada por este navegador.');
     }
   }
+  submitOrder(): void {
+    const link = this.getWhatsAppLink();
+    window.open(link, '_blank');
+    this.clearCartAndShowSuccess();
+  }
+
+  clearCartAndShowSuccess(): void {
+    this.cartService.clearCart();
+    this.updateCartInfo();
+    this.step = 1;
+    alert('¡Orden enviada con éxito!');
+  }
+
+  //funcion para copiar los datos de la tarjeta
+
+  copyToClipboard(data: string): void {
+    navigator.clipboard.writeText(data).then(() => {
+      alert('¡Copiado al portapapeles!');
+    }).catch(err => {
+      console.error('Error al copiar al portapapeles:', err);
+    });
+  }  
+
 }
