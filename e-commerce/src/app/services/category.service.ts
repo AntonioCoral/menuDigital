@@ -11,7 +11,7 @@ import { SubdomainService } from './subdomainService';
 })
 export class CategoryService {
   //private apiUrl = 'https://codeconnectivity.com/apilinea/api/categories/';
-  private apiUrl = 'https://codeconnectivity.com/apilinea/api/categories/';
+  private apiUrl = 'https://codeconnectivity.com/api/api/categories/';
 
   constructor(private http: HttpClient, private subdomainService: SubdomainService) {}
 

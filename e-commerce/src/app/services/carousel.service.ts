@@ -16,7 +16,7 @@ export interface CarouselImage {
   providedIn: 'root'
 })
 export class CarouselService { 
-  private baseUrl = 'https://codeconnectivity.com/apilinea/api/carousel/menu';
+  private baseUrl = 'https://codeconnectivity.com/api/api/carousel/menu';
 
   constructor(
     private http: HttpClient,
