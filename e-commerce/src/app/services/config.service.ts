@@ -8,7 +8,7 @@ import { SubdomainService } from './subdomainService';
   providedIn: 'root',
 })
 export class ConfigService {
-  private baseUrl = 'http://localhost:500/api/contact'; // Asegúrate que sea la URL correcta
+  private baseUrl = 'https://codeconnectivity.com/apilinea/api/contact'; // Asegúrate que sea la URL correcta
 
   constructor(
     private http: HttpClient,

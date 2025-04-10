@@ -33,7 +33,7 @@
       <div class="row">
         <div *ngFor="let product of products" class="col-6 col-md-4 mb-4">
           <div class="card product-card h-100">
-            <img [src]="product.image ? ('http://localhost:500/uploads/' + product.image) : 'assets/logo2.png'"
+            <img [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'"
                  alt="{{ product.name }}" class="product-image">
             <!-- Cuerpo de la tarjeta -->
           <div class="card-body">
@@ -70,7 +70,7 @@
         <div class="card product-card h-100">
           <!-- Imagen del producto -->
           <img 
-            [src]="product.image ? ('http://localhost:500/uploads/' + product.image) : 'assets/logo2.png'" 
+            [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'" 
             alt="{{ product.name }}" 
             class="product-image"
           />
@@ -108,7 +108,7 @@
               <div class="card product-card h-100">
                 <!-- Imagen del producto -->
                 <img 
-                  [src]="product.image ? ('http://localhost:500/uploads/' + product.image) : 'assets/logo2.png'" 
+                  [src]="product.image ? ('https://codeconnectivity.com/apilinea/uploads/' + product.image) : 'assets/logo2.png'" 
                   alt="{{ product.name }}" 
                   class="product-image"
                 />
@@ -162,7 +162,7 @@
 
     <!-- Imagen y nombre -->
     <img 
-      [src]="selectedProduct.image ? ('http://localhost:500/uploads/' + selectedProduct.image) : 'assets/logo2.png'" 
+      [src]="selectedProduct.image ? ('https://codeconnectivity.com/apilinea/uploads/' + selectedProduct.image) : 'assets/logo2.png'" 
       alt="{{ selectedProduct.name }}" 
       class="mx-auto h-32 w-32 object-cover rounded-md"
     />

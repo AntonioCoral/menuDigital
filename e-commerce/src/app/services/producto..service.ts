@@ -10,7 +10,7 @@ import { SubdomainService } from './subdomainService';
 })
 export class ProductsService {
   //private apiUrl = 'https://codeconnectivity.com/apilinea/api/products/';
-  private apiUrl = 'http://localhost:500/api/products/';
+  private apiUrl = 'https://codeconnectivity.com/apilinea/api/products/';
 
   constructor(private http: HttpClient, private subdomainService: SubdomainService) {}
   
