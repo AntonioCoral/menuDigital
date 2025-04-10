@@ -23,7 +23,7 @@ body {
 
 /* Estilos para el toastr de éxito */
 .toast-success {
-  background-color: #fa6351 !important; /* Color verde personalizado */
+  background-color: #33d849 !important; /* Color verde personalizado */
   color: white !important;
 }
 

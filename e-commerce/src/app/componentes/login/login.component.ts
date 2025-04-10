@@ -5,6 +5,7 @@ import { CarouselImage, CarouselService } from '../../services/carousel.service'
 import { ConfigService } from './../../services/config.service';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../interfaces/category';
+import { SubdomainService } from '../../services/subdomainService';
 @Component({
   selector: 'app-home',
   templateUrl: './login.component.html',
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
     private carouselService: CarouselService,
     private categoryService: CategoryService,
     private ConfigService: ConfigService,
+    private subdomainService: SubdomainService
   ) { }
 
   ngOnInit(): void {
@@ -58,7 +60,11 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-  
+  goToProductList(): void {
+      const subdomain = this.subdomainService.getSubdomain();
+      this.router.navigate(['/product-list'], 
+      { queryParams: { subdomain } });
+  }
   
   
   
@@ -80,7 +86,10 @@ export class LoginComponent implements OnInit {
       console.error('El categoryId no está definido');
       return;
     }
-    this.router.navigate(['/categorias', categoria.name]);
+    const subdomain = this.subdomainService.getSubdomain();
+      this.router.navigate(['/categorias', categoria.name], 
+      { queryParams: { subdomain } });
   }
+  
 }
 

@@ -4,6 +4,7 @@ import { ProductsService } from './../../services/producto..service';
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../interfaces/producto';
+import { SubdomainService } from '../../services/subdomainService';
 
 @Component({
   selector: 'app-cart',
@@ -30,6 +31,7 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private ConfigService: ConfigService,
+    private subdomainService: SubdomainService
   ) {}
 
   ngOnInit(): void {

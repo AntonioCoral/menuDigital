@@ -4,6 +4,7 @@ import { filter } from 'rxjs/operators';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../interfaces/category';
 import { Location } from '@angular/common';
+import { SubdomainService } from '../../services/subdomainService';
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +21,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     private router: Router,
     private categoryService: CategoryService,
-    private location: Location
+    private location: Location,
+    private subdomainService: SubdomainService
   ) {
     // Detectar si estamos en la página del carrito
     this.router.events
@@ -45,19 +47,28 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  buscarProductos(): void {
-    if (this.searchQuery) {
-      this.router.navigate(['/product-list'], { queryParams: { query: this.searchQuery.trim() } });
-    }
+  buscarProductos(query: string): void {
+    const subdomain = this.subdomainService.getSubdomain();
+    this.router.navigate(['/product-list'], {
+      queryParams: { query, subdomain }
+    });
   }
 
   filtrarPorCategoria(categoria: any): void {
-    this.router.navigate(['/categorias', categoria.name]);
-    this.isMenuOpen = false; // Cierra el menú al seleccionar una categoría
+    const subdomain = this.obtenerSubdominioDesdeURL();
+    this.router.navigate(['/categorias', categoria.name], { queryParams: { subdomain } });
+    this.isMenuOpen = false;
   }
+  obtenerSubdominioDesdeURL(): string {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('subdomain') || 'defaultCompany';
+  }
+  
+  
 
   verCarrito(): void {
-    this.router.navigate(['/cart']);
+    const subdomain = this.subdomainService.getSubdomain();
+    this.router.navigate(['/cart'], { queryParams: { subdomain } });
   }
 
   goBackHome(): void {

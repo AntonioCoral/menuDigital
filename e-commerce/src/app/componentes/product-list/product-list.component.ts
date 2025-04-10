@@ -59,6 +59,7 @@ export class ProductListComponent implements OnInit {
     ]).subscribe(([params, queryParams]) => {
       const categoria = params['categoria'];
       const query = queryParams['query'];
+      const subdomain = queryParams['subdomain'];
   
       if (query) {
         this.viewingCategory = false;

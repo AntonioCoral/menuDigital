@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { SubdomainService } from './subdomainService';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigService {
-  private baseUrl = 'http://localhost:4500/api/contact'; // Ajusta la URL según tu backend
+  private baseUrl = 'http://localhost:500/api/contact'; // Asegúrate que sea la URL correcta
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private subdomainService: SubdomainService
+  ) {}
 
-  getPhoneNumber(): Observable< {
-    phoneNumber: string;
-  }>{
-    return this.http.get<{
-    phoneNumber: string;
-    }>(`${this.baseUrl}`);
-  }
-
-  // Obtener la información de contacto
   getContactInfo(): Observable<{
     openedTime: string;
     bankAccount: string;
@@ -26,12 +22,21 @@ export class ConfigService {
     bankName: string;
     accountHolder: string;
   }> {
+    const subdomain = this.subdomainService.getSubdomain();
     return this.http.get<{
       openedTime: string;
       bankAccount: string;
       clabe: string;
       bankName: string;
       accountHolder: string;
-    }>(`${this.baseUrl}`);
+    }>(`${this.baseUrl}/menu?subdomain=${subdomain}`);
+  }
+
+  getPhoneNumber(): Observable<{ phoneNumber: string }> {
+    const subdomain = this.subdomainService.getSubdomain();
+    return this.http.get<any>(`${this.baseUrl}/menu?subdomain=${subdomain}`)
+      .pipe(
+        map(data => ({ phoneNumber: data.phoneNumber }))
+      );
   }
 }
