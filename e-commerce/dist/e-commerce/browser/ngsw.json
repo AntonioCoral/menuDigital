@@ -1,0 +1,133 @@
+{
+  "configVersion": 1,
+  "timestamp": 1744335119133,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "e-commerce",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/main-YED23ARS.js",
+        "/manifest.webmanifest",
+        "/polyfills-A7MJM4D4.js",
+        "/styles-TO2IIB44.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/categorias/abarrotes.jpg",
+        "/assets/categorias/carnes.jpg",
+        "/assets/categorias/ferreteria.png",
+        "/assets/categorias/frutas.jpg",
+        "/assets/categorias/papeleria.jpg",
+        "/assets/icons/add.png",
+        "/assets/icons/decrease.png",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/icons/remove.png",
+        "/assets/icons/web-app-manifest-192x192.png",
+        "/assets/icons/web-app-manifest-512x512.png",
+        "/assets/logo2.png",
+        "/assets/logoCode.png",
+        "/assets/logotransparente.png",
+        "/assets/pick up.png",
+        "/assets/servicios/delivery.jpg",
+        "/assets/servicios/promocuartitas.jpg",
+        "/assets/servicios/promomisiltec.jpg",
+        "/assets/servicios/promomisiltecoriginal.jpg",
+        "/assets/servicios/promomisilxx.jpg",
+        "/assets/servicios/promosTecatelight.jpg",
+        "/assets/servicios/promosixsuperior.jpg",
+        "/assets/servicios/promosixtecatecero.jpg",
+        "/assets/servicios/promosixxx.jpg",
+        "/assets/servicios/resguardo.jpg",
+        "/assets/servicios/retiroDomicilio.jpg",
+        "/assets/servicios/retiroTienda.jpg",
+        "/assets/super.jpg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/categorias/abarrotes.jpg": "1554958c15e42552bd6b0c88395fc62b47bebbe3",
+    "/assets/categorias/carnes.jpg": "ccb1d10d218fcbdc5b820ceb9c27282270c0d79b",
+    "/assets/categorias/ferreteria.png": "9a8b0f99555e8f8a5fa6ecf77b45b95f9f5ed43c",
+    "/assets/categorias/frutas.jpg": "14ee48616d9dacf9fbbe1f4d0a00c77e9d90481b",
+    "/assets/categorias/papeleria.jpg": "ec3b565b1804c75f9a0ba9cae58293533f0832e7",
+    "/assets/icons/add.png": "0ddaf79748e845777e3862f3813d29430f0f4d23",
+    "/assets/icons/decrease.png": "8b538cf39be7ff8835ea7278082c7911c3377bfe",
+    "/assets/icons/icon-128x128.png": "1a05d37ea7f3ddb7d6c529f579dd8480dcfd84b5",
+    "/assets/icons/icon-144x144.png": "aeccf9a13e6410dc16f3494769fdbe5306fbba78",
+    "/assets/icons/icon-152x152.png": "d0d6bb8578a1fe7012189f6b9bc11a45b68ddddc",
+    "/assets/icons/icon-192x192.png": "90c497dea8c81a99d237642cda880e61a3b25193",
+    "/assets/icons/icon-384x384.png": "be40c8a7644c7227e55cf2a8abd3eb8db9a8572b",
+    "/assets/icons/icon-512x512.png": "c1e94ba34207fb94355938bfbaeea76de4431c1f",
+    "/assets/icons/icon-72x72.png": "01e6257027c1cb8cef63e20256c69edd85fea36b",
+    "/assets/icons/icon-96x96.png": "edd9e0967683f82b69e939d87963d5ccd5588403",
+    "/assets/icons/remove.png": "bebe5d7a6629cbce560b770564db489cf593f778",
+    "/assets/icons/web-app-manifest-192x192.png": "fa8bbd065b5c978699acee69241838e77bf900f2",
+    "/assets/icons/web-app-manifest-512x512.png": "40b87ddc973fbd7c5396b731268ab48af50b328f",
+    "/assets/logo2.png": "26f2670cfd962d19b728e116d40b7c6ea4846a83",
+    "/assets/logoCode.png": "afda459367e1aa097a6e034df29c5017f8fa2f0f",
+    "/assets/logotransparente.png": "db9ce2bd42f747f18eac74df5e7839b666e4ef9e",
+    "/assets/pick up.png": "4ba20372173c9c23c5cbcf678e0249b23c978b9f",
+    "/assets/servicios/delivery.jpg": "060ae977c0b64ed363ec9aad512b93cf6196d32b",
+    "/assets/servicios/promocuartitas.jpg": "2d33894c52b73cd5c088290dabf26923cb7ccfeb",
+    "/assets/servicios/promomisiltec.jpg": "69477b5e3896eb1fb8788eea958fd3306589a3b7",
+    "/assets/servicios/promomisiltecoriginal.jpg": "c0134d5f1bda95d1cafe68a5d1811dde42221d1a",
+    "/assets/servicios/promomisilxx.jpg": "109114ce935376eb194dafa9cf53cde4ada22d78",
+    "/assets/servicios/promosTecatelight.jpg": "c21f36827da4fde7a76a947e5230cec2d23fca66",
+    "/assets/servicios/promosixsuperior.jpg": "5cd2a59886e0f05c967135f9f70da550e00f1449",
+    "/assets/servicios/promosixtecatecero.jpg": "24f92b2f218625a28581f7fa69959c39922c86cc",
+    "/assets/servicios/promosixxx.jpg": "fb4afc131141f6c5cfc72421d084644e1eeaa63f",
+    "/assets/servicios/resguardo.jpg": "d2732180c147cd1727aa47a55aad18ca9300c393",
+    "/assets/servicios/retiroDomicilio.jpg": "3f2192be813ed8d88fec8c3315924c1dbb9075ce",
+    "/assets/servicios/retiroTienda.jpg": "c8042586d24e355539e130675c508e9f83bcd5a5",
+    "/assets/super.jpg": "5fe23d076de5001263e9684ac4e48330751ea5a5",
+    "/favicon.ico": "7a750d8a85375a068243856f8a3517482bcb0d9a",
+    "/index.html": "bd4fb6a2269274aec2b5f2c17e4bc2cfb94b8478",
+    "/main-YED23ARS.js": "773ac0cdc38bfefc87ad07119b25851897688309",
+    "/manifest.webmanifest": "f89779211e8462c01de730e27a33be0465bd0823",
+    "/polyfills-A7MJM4D4.js": "547053781d5952561abe68a51cc6c1a2b1b51c55",
+    "/styles-TO2IIB44.css": "a8323f1ccd5be1db39360109554b1e5cd13b8c98"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
