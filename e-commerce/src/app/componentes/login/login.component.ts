@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   featuredProducts: any;
   category: Category[] = [];
   openedTime: string = '';
+  isOpen: boolean = false;
 
 
   constructor(
@@ -73,12 +74,32 @@ export class LoginComponent implements OnInit {
     this.ConfigService.getContactInfo().subscribe(
       (response) => {
         this.openedTime = response?.openedTime || '';
+        this.checkIfOpen(); // ✅ Comprobamos si está abierto luego de cargar el horario
       },
       (error) => {
         console.error('Error al cargar la información de contacto:', error);
       }
     );
   }
+
+  checkIfOpen(): void {
+    if (!this.openedTime || !this.openedTime.includes('-')) return;
+
+    const [start, end] = this.openedTime.split(' - ').map(t => t.trim());
+    const now = new Date();
+
+    const [startHours, startMinutes] = start.split(':').map(Number);
+    const [endHours, endMinutes] = end.split(':').map(Number);
+
+    const startTime = new Date();
+    const endTime = new Date();
+
+    startTime.setHours(startHours, startMinutes, 0);
+    endTime.setHours(endHours, endMinutes, 0);
+
+    this.isOpen = now >= startTime && now <= endTime;
+  }
+
 
   // Navega a la categoría seleccionada
   navigateToCategory(categoria: any): void {

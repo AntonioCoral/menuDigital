@@ -109,7 +109,7 @@
               <label for="address" class="form-label">Dirección</label>
               <input placeholder="Ingresa tu dirección" type="text" class="form-control" id="address" [(ngModel)]="address" name="address">
               <button type="button" class="btn btn-info mt-2" (click)="fetchLocation()">Obtener Ubicación</button>
-              <p *ngIf="locationUrl">Ubicación: <a href="{{ locationUrl }}" target="_blank">Ver en Maps</a></p>
+              <p *ngIf="locationUrl">Ubicación: <a href="{{ locationUrl }}" target="_blank">Obtenida</a></p>
             </div>
           </form>
         </div>

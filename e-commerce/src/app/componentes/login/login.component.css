@@ -45,10 +45,23 @@
 }
 
 
-.btn-primary{
+.btn-explore {
   background-color: rgb(250, 210, 32);
   border: none;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  border-radius: 9999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s, background-color 0.3s;
 }
+
+.btn-explore:hover {
+  background-color: rgb(255, 223, 70);
+  transform: scale(1.05);
+}
+
 /* Categorías */
 .carousel-containerr {
   width: 100%;
@@ -57,22 +70,16 @@
   height: auto; /* Ajustar automáticamente al contenido */
   padding: 10px 0; /* Agregar espacio arriba y abajo para las tarjetas */
 }
-
-.carousel-track {
-  display: flex;
-  gap: 1rem;
-  animation: scroll-carousel 20s linear infinite;
-  will-change: transform;
+/* Solo si necesitas refuerzo en CSS extra */
+.carousel-containerr::-webkit-scrollbar {
+  display: none; /* Oculta la barra de scroll */
 }
 
-@keyframes scroll-carousel {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
+.carousel-containerr {
+  -ms-overflow-style: none;  /* IE y Edge */
+  scrollbar-width: none;     /* Firefox */
 }
+
 
 /* Tarjetas de Categorías */
 .category-card {
@@ -83,8 +90,8 @@
   background-color: #f9f9f9;
   padding: 15px;
   border-radius: 38px;
-  border: 2px solid #ffe066; /* Borde amarillo claro */
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #d3d0d0; /* Borde amarillo claro */
+  box-shadow: 0 1px 6px rgba(255, 7, 7, 0.1);
   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 

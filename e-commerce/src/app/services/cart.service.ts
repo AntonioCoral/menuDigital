@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Product, ProductOption } from '../interfaces/producto';
 
 @Injectable({
@@ -7,37 +8,36 @@ import { Product, ProductOption } from '../interfaces/producto';
 export class CartService {
   private items: { product: Product; quantity: number }[] = [];
 
-   // Función para agregar productos al carrito, con opción para incluir opciones
-   addToCart(product: Product, option?: ProductOption): void {
-    // Crear un identificador único si hay una opción seleccionada
-    const productId = option ? `${product.id}-${option.description}` : product.id;
+  // NUEVO: BehaviorSubject para emitir actualizaciones en tiempo real
+  private cartSubject = new BehaviorSubject<{ product: Product; quantity: number }[]>([]);
+  cart$ = this.cartSubject.asObservable();
 
-    // Buscar si ya existe el producto con esa opción en el carrito
+  // Función para agregar productos al carrito
+  addToCart(product: Product, option?: ProductOption): void {
+    const productId = option ? `${product.id}-${option.description}` : product.id;
     const item = this.items.find((item) => item.product.id === productId);
 
     if (item) {
-      // Si ya existe, aumentar la cantidad
       item.quantity += 1;
     } else {
-       // Convertir precios a números y calcular el precio total correctamente
-    const basePrice = Number(product.price) || 0; // Asegura que sea un número
-    const optionPrice = option ? Number(option.price) || 0 : 0; // Asegura que sea un número
-    const totalPrice = basePrice + optionPrice; // Sumar precios
+      const basePrice = Number(product.price) || 0;
+      const optionPrice = option ? Number(option.price) || 0 : 0;
+      const totalPrice = basePrice + optionPrice;
 
-      // Crear un nuevo objeto de producto
       const productToAdd: Product = {
         ...product,
         id: productId,
-        price: totalPrice, // Precio sumado
-        name: option ? `${product.name} - ${option.description}` : product.name, // Añadir descripción de la opción
+        price: totalPrice,
+        name: option ? `${product.name} - ${option.description}` : product.name,
       };
 
-      // Agregar al carrito
       this.items.push({ product: productToAdd, quantity: 1 });
     }
+
+    this.cartSubject.next(this.items); // 🔁 Emitir el cambio
   }
 
-  // Obtener los items en el carrito
+  // Obtener los items
   getItems(): { product: Product; quantity: number }[] {
     return this.items;
   }
@@ -45,44 +45,43 @@ export class CartService {
   // Limpiar el carrito
   clearCart(): void {
     this.items = [];
+    this.cartSubject.next(this.items); // 🔁 Emitir el cambio
   }
 
-  // Obtener el precio total de los productos en el carrito
+  // Total de precio
   getTotalPrice(): number {
     return this.items.reduce((total, item) => total + item.product.price * item.quantity, 0);
   }
 
-  // Obtener la cantidad total de productos en el carrito
+  // Total de unidades
   getTotalQuantity(): number {
     return this.items.reduce((total, item) => total + item.quantity, 0);
   }
 
-  // Nueva función para eliminar un producto del carrito
+  // Eliminar un producto
   removeFromCart(product: Product, option?: ProductOption): void {
-    // Crear el identificador único para encontrar el producto en el carrito
     const productId = option ? `${product.id}-${option.description}` : product.id;
-
     this.items = this.items.filter(item => item.product.id !== productId);
+    this.cartSubject.next(this.items); // 🔁 Emitir el cambio
   }
 
-  // Nueva función para disminuir la cantidad de un producto en el carrito
+  // Disminuir cantidad
   decreaseQuantity(product: Product, option?: ProductOption): void {
-    // Crear el identificador único
     const productId = option ? `${product.id}-${option.description}` : product.id;
-
     const item = this.items.find((item) => item.product.id === productId);
 
     if (item) {
       if (item.quantity > 1) {
-        item.quantity--;  // Si la cantidad es mayor a 1, reducirla
+        item.quantity--;
       } else {
-        this.removeFromCart(product, option);  // Si es 1, eliminar el producto
+        this.removeFromCart(product, option);
       }
+      this.cartSubject.next(this.items); // 🔁 Emitir el cambio
     }
   }
 
-  // Nueva función para aumentar la cantidad de un producto en el carrito
+  // Aumentar cantidad
   increaseQuantity(product: Product, option?: ProductOption): void {
-    this.addToCart(product, option);  // Simplemente reutilizamos la función existente para aumentar la cantidad
+    this.addToCart(product, option);
   }
 }

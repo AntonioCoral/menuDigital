@@ -21,33 +21,47 @@
 
 <!-- Boton para explorar e ir a la lista de productos-->
 <div class="cta-section text-center my-6">
-  <button class="btn btn-primary px-4 py-2" (click)="goToProductList()">🛒 Ordenar Ahora</button>
+  <button class="btn-explore" (click)="goToProductList()">
+    🛍️ Explorar Productos
+  </button>
 </div>
+
 <!-- Sección de categorías -->
 <div class="categories-section my-4">
   <h3 class="text-center font-semibold text-xl mb-6">Explora nuestras categorías</h3>
-  <div class="carousel-containerr overflow-hidden relative">
-    <div class="carousel-track flex">
+  <div class="carousel-containerr overflow-x-auto whitespace-nowrap px-2">
+    <div class="carousel-track inline-flex gap-4">
       <div
         *ngFor="let category of categories"
-        class="category-card text-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 cursor-pointer"
+        class="category-card text-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 cursor-pointer min-w-[150px]"
         (click)="navigateToCategory(category)"
       >
-        <p class="font-semibold text-lg text-gray-800 truncate">{{ category.name }}</p>
+        <p class="font-semibold text-lg" style="color: #2b2828">{{ category.name }}</p>
       </div>
     </div>
   </div>
 </div>
 
 
+
+
 <!-- Sección del horario de atención -->
-<div class="attention-hours-section">
-  <div class="attention-hours-icon">
-    🕒
+<div class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 text-center space-y-3">
+  <div class="flex justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
   </div>
-  <h2 class="attention-hours-title">Nuestros horarios de atención</h2>
-  <p class="attention-hours-details">{{ openedTime }}</p>
+  <h2 class="text-xl font-semibold text-gray-800">Nuestros horarios de atención</h2>
+  <p [ngClass]="isOpen ? 'text-green-600' : 'text-red-500'" class="text-lg font-bold">
+    {{ openedTime }}
+  </p>
+  <p class="text-sm" [ngClass]="isOpen ? 'text-green-600' : 'text-red-500'">
+    {{ isOpen ? '¡Estamos laborando!' : 'Actualmente cerrado' }}
+  </p>
 </div>
+
+
 
 
 <!-- Sección de pasos para hacer una orden -->
@@ -86,7 +100,9 @@
 
 <!-- Boton para explorar e ir a la lista de productos-->
 <div class="cta-section text-center my-6">
-  <button class="btn btn-primary px-4 py-2" (click)="goToProductList()">🛒 Ordenar Ahora</button>
+  <button class="btn-explore" (click)="goToProductList()">
+    🛍️ Explorar Productos
+  </button>
 </div>
   <!-- Footer -->
 <footer class="footer mt-auto py-3">

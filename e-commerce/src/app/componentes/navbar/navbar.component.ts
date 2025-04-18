@@ -5,6 +5,7 @@ import { CategoryService } from '../../services/category.service';
 import { Category } from '../../interfaces/category';
 import { Location } from '@angular/common';
 import { SubdomainService } from '../../services/subdomainService';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,8 @@ import { SubdomainService } from '../../services/subdomainService';
 })
 export class NavbarComponent implements OnInit {
   category: Category[] = [];
-  carrito = [];
+  carrito: any[] = [];
+  totalQuantity = 0;
   searchQuery: string = '';
   isCartPage: boolean = false;
   isMenuOpen: boolean = false;
@@ -22,6 +24,7 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private categoryService: CategoryService,
     private location: Location,
+    private cartService: CartService,
     private subdomainService: SubdomainService
   ) {
     // Detectar si estamos en la página del carrito
@@ -34,7 +37,13 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
+    this.cartService.cart$.subscribe((items) => {
+      this.carrito = items;
+      this.totalQuantity = items.reduce((acc, item) => acc + item.quantity, 0);
+    });
+    
   }
+  
 
   loadCategories(): void {
     this.categoryService.getCategories().subscribe(
@@ -45,6 +54,7 @@ export class NavbarComponent implements OnInit {
         console.error('Error fetching categories', error);
       }
     );
+    
   }
 
   buscarProductos(query: string): void {
