@@ -166,11 +166,7 @@ loadSections(): void {
 }
 
 openProductOptions(product: Product): void {
-  if (product.options?.length) {
     this.selectedProduct = product;
-  } else {
-    this.addToCart(product);
-  }
 }
 
 closeModal(): void {
@@ -194,12 +190,20 @@ addToCart(product: Product, option?: ProductOption): void {
 
 addToCartWithOption(product: Product): void {
   const selectedOption = this.selectedOptions[Number(product.id)];
-  if (selectedOption) {
-    this.addToCart(product, selectedOption);
+
+  if (product.options?.length) {
+    // Si tiene opciones, se requiere una opción seleccionada
+    if (selectedOption) {
+      this.addToCart(product, selectedOption);
+    } else {
+      this.toastr.error('Por favor, selecciona una opción', 'Error');
+    }
   } else {
-    this.toastr.error('Por favor, selecciona una opción', 'Error');
+    // Si no tiene opciones, agregar directamente
+    this.addToCart(product);
   }
 }
+
 
   
 

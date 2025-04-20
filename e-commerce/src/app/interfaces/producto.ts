@@ -9,5 +9,6 @@ export interface Product {
   price: number;
   stock: number;
   image?: string;
+  barcode: string; //descripcion del producto
   options: ProductOption[];
 }

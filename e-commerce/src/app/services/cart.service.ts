@@ -16,26 +16,25 @@ export class CartService {
   addToCart(product: Product, option?: ProductOption): void {
     const productId = option ? `${product.id}-${option.description}` : product.id;
     const item = this.items.find((item) => item.product.id === productId);
-
+  
     if (item) {
       item.quantity += 1;
     } else {
-      const basePrice = Number(product.price) || 0;
-      const optionPrice = option ? Number(option.price) || 0 : 0;
-      const totalPrice = basePrice + optionPrice;
-
+      const totalPrice = option ? Number(option.price) || 0 : Number(product.price) || 0;
+  
       const productToAdd: Product = {
         ...product,
         id: productId,
         price: totalPrice,
         name: option ? `${product.name} - ${option.description}` : product.name,
       };
-
+  
       this.items.push({ product: productToAdd, quantity: 1 });
     }
-
+  
     this.cartSubject.next(this.items); // 🔁 Emitir el cambio
   }
+  
 
   // Obtener los items
   getItems(): { product: Product; quantity: number }[] {
