@@ -61,6 +61,8 @@ export class NavbarComponent implements OnInit {
     const subdomain = this.subdomainService.getSubdomain();
     this.router.navigate(['/product-list'], {
       queryParams: { query, subdomain }
+    }).then(() => {
+      this.searchQuery = ''; // 🔥 Limpiar el input después de navegar
     });
   }
 

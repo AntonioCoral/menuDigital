@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1745166299324,
+  "timestamp": 1745809747826,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,10 +13,10 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main-VUZ2AQ3N.js",
+        "/main-ZUVH4A4H.js",
         "/manifest.webmanifest",
         "/polyfills-A7MJM4D4.js",
-        "/styles-ZTHUK55L.css"
+        "/styles-AM5V2ZSS.css"
       ],
       "patterns": []
     },
@@ -105,11 +105,11 @@
     "/assets/servicios/retiroTienda.jpg": "c8042586d24e355539e130675c508e9f83bcd5a5",
     "/assets/super.jpg": "5fe23d076de5001263e9684ac4e48330751ea5a5",
     "/favicon.ico": "7a750d8a85375a068243856f8a3517482bcb0d9a",
-    "/index.html": "43c01d4acc5885ccfac64622091eb8616ab34d76",
-    "/main-VUZ2AQ3N.js": "91d1b2201bc7c81f489c852591eacaf2eb4de94a",
+    "/index.html": "583ba6a96d915e44a234de04f67c4f02e33d2711",
+    "/main-ZUVH4A4H.js": "07073923b5f14f313fb09578c4c075e3d50e55ee",
     "/manifest.webmanifest": "f89779211e8462c01de730e27a33be0465bd0823",
     "/polyfills-A7MJM4D4.js": "547053781d5952561abe68a51cc6c1a2b1b51c55",
-    "/styles-ZTHUK55L.css": "6cc90af7ad360f2a847511a45f5b1d506063f344"
+    "/styles-AM5V2ZSS.css": "2b55f1b1068832015b3bb4e4673155766eb98bbf"
   },
   "navigationUrls": [
     {

@@ -10,6 +10,53 @@
   border: none;
 }
 
+/* Carousel limpio */
+.carousel-container {
+  margin-top: 0;
+  margin-bottom: 1rem; /* separa suavemente del contenido */
+  background-color: #fff; /* fondo blanco para que no haya corte visual */
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* PRODUCT SECTION MODERNO */
+.product-section {
+  background-color: #f7f7f7;
+  padding: 1.5rem 1rem;
+  border-radius: 0 0 15px 15px; /* curva suave abajo */
+}
+
+/* Ahora tus cards se ven conectadas naturalmente */
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2rem;
+  margin: 1rem;
+}
+
+.product-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.product-container::-webkit-scrollbar {
+  display: none;
+}
+
+.product-card {
+  flex: 0 0 auto;
+  width: 180px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
 
 /* Reducir margen inferior entre títulos y productos */
 .section-title {
@@ -184,7 +231,6 @@
   position: relative;
   margin-top: -280px;
   z-index: 1;
-  background: linear-gradient(to top, rgb(238, 238, 238) 80%, rgba(212, 212, 212, 0.055) 100%);
   padding: 0px;
   
 }
