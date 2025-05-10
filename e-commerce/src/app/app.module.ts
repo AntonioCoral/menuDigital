@@ -17,6 +17,9 @@ import { CartComponent } from "./componentes/cart/cart.component";
 import { FormsModule } from "@angular/forms";
 import { provideToastr, ToastrModule } from "ngx-toastr";
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { Router, RouterModule, Scroll } from "@angular/router";
+import { filter } from "rxjs";
+
 
 @NgModule({
     declarations: [
@@ -31,6 +34,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         FormsModule,
         HttpClientModule,
         BrowserModule,
+        RouterModule.forRoot([], {
+  scrollPositionRestoration: 'enabled'  // Restaura el scroll automáticamente al navegar
+}),
         MatToolbarModule,
         MatIconModule,
         MatButtonModule,
@@ -38,6 +44,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         MatMenuModule,
         MatListModule,
         BrowserAnimationsModule,
+        
         ToastrModule.forRoot({
           timeOut: 1000,
           positionClass: 'toast-top-right', // O cualquier otra posición que prefieras
@@ -46,6 +53,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
           progressAnimation: 'increasing', // Puedes cambiar a 'decreasing' según tu preferencia
           closeButton: true, // Si tu otra app tiene un botón de cierre
         }),
+        
             
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: !isDevMode(),
@@ -60,4 +68,5 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     bootstrap: [ AppComponent ]
 })
 
-export class AppModule { }
+export class AppModule {
+ }

@@ -27,6 +27,7 @@ export class CartComponent implements OnInit {
   clabe: string = '';
   bankName: string = '';
   accountHolder: string = '';
+  isOpen: boolean = false;
 
   constructor(
     private cartService: CartService,
@@ -72,6 +73,14 @@ export class CartComponent implements OnInit {
     this.totalQuantity = this.cartService.getTotalQuantity();
     this.totalPrice = this.cartService.getTotalPrice();
   }
+
+  toggleSidebar(): void {
+    this.isOpen = !this.isOpen;
+    if (this.isOpen) {
+      this.updateCartInfo();
+    }
+  }
+
   nextStep(): void {
     if (this.step < 3) {
       this.step++;
@@ -83,6 +92,13 @@ export class CartComponent implements OnInit {
       this.step--;
     }
   }
+
+  goToStep(step: number): void {
+  if (step >= 1 && step <= 3) {
+    this.step = step;
+  }
+}
+
 
   // Eliminar un producto del carrito
   removeItem(product: Product): void {
@@ -167,5 +183,30 @@ export class CartComponent implements OnInit {
       console.error('Error al copiar al portapapeles:', err);
     });
   }  
+
+      isModalOpen: boolean = false;
+
+    openModal(): void {
+      this.isModalOpen = true;
+
+      // Cargar la información bancaria al abrir el modal
+      this.ConfigService.getContactInfo().subscribe(
+        (response) => {
+          this.bankAccount = response?.bankAccount || '';
+          this.clabe = response?.clabe || '';
+          this.bankName = response?.bankName;
+          this.accountHolder = response?.accountHolder || '';
+        },
+        (error) => {
+          console.error('Error al cargar la información de contacto:', error);
+        }
+      );
+    }
+
+
+    closeModal(): void {
+      this.isModalOpen = false;
+    }
+
 
 }

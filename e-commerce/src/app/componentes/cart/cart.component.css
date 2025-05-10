@@ -1,82 +1,203 @@
-/* Contenedor principal de la barra de progreso */
-.progress-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0;
-  }
-  .btn-primary{
-    background-color: rgb(18, 148, 235);
-    border: none;
-  }
-  /* Card bancaria*/
-  .cardBancaria {
-    background: linear-gradient(to right, #f0de3a, #C62828);
-    color: white;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  /* Botón "Copiar" */
-.btn {
-  font-size: 0.8rem;
-  padding: 5px 10px;
+.cart-sidebar {
+  position: fixed;
+  right: -400px;
+  top: 0;
+  width: 400px;
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow-y: auto;
+  transition: right 0.3s ease;
+  padding: 15px; /* Separación del contenido */
+}
+
+.cart-sidebar.open {
+  right: 0;
+}
+
+/* Estilo para el título */
+.sidebar-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+  border-bottom: 2px solid #f1f1f1;
+  padding-bottom: 10px;
+}
+
+.modal-drawer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 400px;
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1500;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background-color: transparent;
   border: none;
+  font-size: 30px;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-.btn:hover {
-  background: #ffcc00;
-  color: black;
+.modal-body {
+  margin-top: 15px;
 }
-  
-  /* Línea de la barra de progreso */
-  .progress-bar-line {
-    position: relative;
-    width: 100%;
-    height: 10px;
-    background-color: #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
-  /* Progreso dinámico */
-  .progress {
-    position: absolute;
-    height: 100%;
-    background: linear-gradient(90deg, #fab31a, #e2d845);
-    transition: width 0.3s ease-in-out;
-  }
-  
-  /* Pasos de la barra */
-  .progress-steps {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 10px;
-  }
-  
-  .step {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    background-color: #ddd;
-    color: #fff;
-    border-radius: 50%;
-    font-weight: bold;
-    font-size: 14px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  /* Estado activo */
-  .step.active {
-    background-color: #f59910;
-    color: #fff;
-  }
 
-  
-  
+.payment-card {
+  width: 100%;
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 20px;
+  margin-top: 15px;
+  padding: 15px;
+}
+
+.card-header {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-row strong {
+  color: #333;
+}
+
+.copy-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.copy-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Separación del contenido en el carrito */
+.cart-content {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Contenedor principal de la barra */
+.progress-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Barra de progreso */
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+/* Progreso interno */
+.progress-bar-inner {
+  height: 100%;
+  background-color: #4CAF50;
+  transition: width 0.3s ease;
+}
+
+/* Pasos numerados */
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.step {
+  width: 30px;
+  height: 30px;
+  background-color: #e0e0e0;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.step.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.step:hover {
+  background-color: #66bb6a;
+}
+
+
+/* Contenedor para los botones */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* Botón general */
+.action-btn {
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Botón para eliminar con color de alerta */
+.delete-btn {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #ff4c4c;
+}
+
+/* Íconos dentro de los botones */
+.fa {
+  font-size: 14px;
+}

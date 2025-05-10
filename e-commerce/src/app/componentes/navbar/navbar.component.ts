@@ -80,6 +80,7 @@ export class NavbarComponent implements OnInit {
 
   verCarrito(): void {
     const subdomain = this.subdomainService.getSubdomain();
+    
     this.router.navigate(['/cart'], { queryParams: { subdomain } });
   }
 

@@ -1,8 +1,8 @@
 import { CategoryService } from './../../services/category.service';
 
 // src/app/components/product-list/product-list.component.ts
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { ProductsService } from '../../services/producto..service';
 import { Product, ProductOption } from '../../interfaces/producto';
 import { CartService } from '../../services/cart.service';
@@ -30,7 +30,7 @@ export class ProductListComponent implements OnInit {
    // Crear un objeto para mantener el estado de la paginación por categoría
   paginationState: { [category: string]: { currentPage: number; totalPages: number } } = {};
   carouselImages: CarouselImage[] = []; // Cambiar el tipo a CarouselImage[]
-
+  private scrollPosition = { x: 0, y: 0 };
 
 
   constructor(
@@ -41,9 +41,18 @@ export class ProductListComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private carouselService: CarouselService,
+    
+    
   ) {}
 
   ngOnInit(): void {
+  this.loadCachedData();
+  // Restaurar la posición del scroll
+    const cachedScroll = sessionStorage.getItem('scrollPosition');
+    if (cachedScroll) {
+      const { x, y } = JSON.parse(cachedScroll);
+      setTimeout(() => window.scrollTo(x, y), 0);
+    }
     // Observa los cambios en los parámetros de ruta y en los parámetros de consulta al mismo tiempo
     this.carouselService.getImagesBySection('carousel').subscribe(
       (images) => {
@@ -86,11 +95,21 @@ export class ProductListComponent implements OnInit {
       error => console.error('Search error:', error)
     );
   }
+
+  loadCachedData() {
+    const cachedProducts = sessionStorage.getItem('productos');
+    if (cachedProducts) {
+      this.products = JSON.parse(cachedProducts);
+    } else {
+      this.loadProducts();
+    }
+  }
   
   loadProducts(): void {
     this.productsService.getAllProducts().subscribe(
       (products: Product[]) => {
         this.products = products;
+        sessionStorage.setItem('productos', JSON.stringify(products));
       },
       (error) => {
         console.error('Error loading products:', error);
@@ -98,16 +117,23 @@ export class ProductListComponent implements OnInit {
     );
   }
 
+  
   loadProductsByCategory(categoria: string): void {
     this.categoryService.getProductsByCategory(categoria).subscribe(
       (products: Product[]) => {
         this.products = products;
+        sessionStorage.setItem('productos', JSON.stringify(products));
       },
       (error) => {
         console.error('Error loading products by category:', error);
       }
     );
   }
+    @HostListener('window:scroll', [])
+      saveScrollPosition(): void {
+        this.scrollPosition = { x: window.scrollX, y: window.scrollY };
+        sessionStorage.setItem('scrollPosition', JSON.stringify(this.scrollPosition));
+      }
 
   
 
@@ -123,6 +149,7 @@ loadProductsByCategoryy(categoria: string): void {
       }
       // Actualizamos el estado de la paginación de la categoría
       this.paginationState[categoria] = { currentPage: data.currentPage, totalPages: data.totalPages };
+      
     },
     (error) => {
       this.toastr.error('Error al cargar productos');
@@ -216,5 +243,17 @@ addToCartWithOption(product: Product): void {
     const carouselElement = this.carousels.toArray()[index].nativeElement;
     carouselElement.scrollBy({ left: 900, behavior: 'smooth' });
   }
+
+  imagenAmpliada: boolean = false;
+
+ampliarImagen(): void {
+  this.imagenAmpliada = true;
+}
+
+cerrarImagenAmpliada(): void {
+  this.imagenAmpliada = false;
+}
+
+
 }
 
