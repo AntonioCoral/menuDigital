@@ -1,59 +1,68 @@
 <!-- Sidebar del carrito -->
 <div class="cart-sidebar" [class.open]="isOpen">
-  <button class="close-btn" (click)="toggleSidebar()">✖</button>
-  <h1 class="sidebar-title">Carrito de Compras</h1>
+  
+  <!-- Header Fijo -->
+  <div class="cart-headerProduct">
+    <button class="close-btn" (click)="toggleSidebar()">✖</button>
+    <h1 class="sidebar-title">Carrito de Compras</h1>
+  </div>
 
-  <div *ngIf="items.length > 0; else emptyCart">
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Productos</th>
-            <th>Precio</th>
-            <th>U.</th>
-            <th>Total</th>
-            <th></th> 
-          </tr>
-        </thead>
+  <!-- Contenedor del contenido y el scroll -->
+  <div class="cart-content">
+    <div *ngIf="items.length > 0; else emptyCart">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Productos</th>
+              <th>Precio</th>
+              <th>U.</th>
+              <th>Total</th>
+              <th></th> 
+            </tr>
+          </thead>
 
-        <tbody>
-  <tr *ngFor="let item of items">
-    <td>{{ item.product.name }}</td>
-    <td>{{ item.product.price | currency }}</td>
-    <td>{{ item.quantity }}</td>
-    <td>{{ (item.product.price * item.quantity) | currency }}</td>
-    <td>
-      <div class="action-buttons">
-        <button class="action-btn" (click)="decreaseQuantity(item.product)">
-          <i class="fa fa-minus"></i>
-        </button>
-        <button class="action-btn" (click)="increaseQuantity(item.product)">
-          <i class="fa fa-plus"></i>
-        </button>
-        <button class="action-btn delete-btn" (click)="removeItem(item.product)">
-          <i class="fa fa-trash"></i>
-        </button>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td>{{ item.product.name }}</td>
+              <td>{{ item.product.price | currency }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ (item.product.price * item.quantity) | currency }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="action-btn" (click)="decreaseQuantity(item.product)">
+                    <i class="fa fa-minus"></i>
+                  </button>
+                  <button class="action-btn" (click)="increaseQuantity(item.product)">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                  <button class="action-btn delete-btn" (click)="removeItem(item.product)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </td>
-  </tr>
-</tbody>
-
-      </table>
     </div>
+  </div>
 
-    <div class="mt-4">
+        <!-- Contenedor para los Totales y el botón "Comprar" -->
+    <div class="cart-footer">
       <p><strong>Total de productos:</strong> {{ totalQuantity }}</p>
       <p><strong>Precio total:</strong> {{ totalPrice | currency }}</p>
+      
       <div class="p-4">
         <button 
-          class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-lg shadow-md transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+          class="btn-comprar w-full font-bold py-3 rounded-lg shadow-md transition-all duration-300 active:scale-95 focus:outline-none"
           (click)="openModal()"
         >
           Comprar
         </button>
       </div>
     </div>
-  </div>
+
 
   <ng-template #emptyCart>
     <p>Tu carrito está vacío</p>
