@@ -36,10 +36,16 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.updateCartInfo();
-    this.loadPhoneNumber();
-    this.loadContactInfo();
-  }
+      this.cartService.cart$.subscribe(items => {
+        this.items = items;
+        this.totalQuantity = this.cartService.getTotalQuantity();
+        this.totalPrice = this.cartService.getTotalPrice();
+      });
+
+      this.loadPhoneNumber();
+      this.loadContactInfo();
+    }
+
 
   // Cargar el número de teléfono desde la base de datos
   loadPhoneNumber(): void {
@@ -76,9 +82,6 @@ export class CartComponent implements OnInit {
 
   toggleSidebar(): void {
     this.isOpen = !this.isOpen;
-    if (this.isOpen) {
-      this.updateCartInfo();
-    }
   }
 
   nextStep(): void {
