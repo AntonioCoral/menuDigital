@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1747274763855,
+  "timestamp": 1748915632791,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main-XAXIJENM.js",
+        "/main-TBBTYUWH.js",
         "/manifest.webmanifest",
         "/polyfills-A7MJM4D4.js",
         "/styles-WBR4WQFX.css"
@@ -46,10 +46,9 @@
         "/assets/icons/remove.png",
         "/assets/icons/web-app-manifest-192x192.png",
         "/assets/icons/web-app-manifest-512x512.png",
-        "/assets/logo2.png",
         "/assets/logoCode.png",
         "/assets/logotransparente.png",
-        "/assets/pick up.png",
+        "/assets/menuexpress.png",
         "/assets/servicios/delivery.jpg",
         "/assets/servicios/promocuartitas.jpg",
         "/assets/servicios/promomisiltec.jpg",
@@ -87,10 +86,9 @@
     "/assets/icons/remove.png": "bebe5d7a6629cbce560b770564db489cf593f778",
     "/assets/icons/web-app-manifest-192x192.png": "fa8bbd065b5c978699acee69241838e77bf900f2",
     "/assets/icons/web-app-manifest-512x512.png": "40b87ddc973fbd7c5396b731268ab48af50b328f",
-    "/assets/logo2.png": "26f2670cfd962d19b728e116d40b7c6ea4846a83",
     "/assets/logoCode.png": "afda459367e1aa097a6e034df29c5017f8fa2f0f",
     "/assets/logotransparente.png": "db9ce2bd42f747f18eac74df5e7839b666e4ef9e",
-    "/assets/pick up.png": "4ba20372173c9c23c5cbcf678e0249b23c978b9f",
+    "/assets/menuexpress.png": "86d205039a0afba8289e1c2433bda11a774c544e",
     "/assets/servicios/delivery.jpg": "060ae977c0b64ed363ec9aad512b93cf6196d32b",
     "/assets/servicios/promocuartitas.jpg": "2d33894c52b73cd5c088290dabf26923cb7ccfeb",
     "/assets/servicios/promomisiltec.jpg": "69477b5e3896eb1fb8788eea958fd3306589a3b7",
@@ -105,9 +103,9 @@
     "/assets/servicios/retiroTienda.jpg": "c8042586d24e355539e130675c508e9f83bcd5a5",
     "/assets/super.jpg": "5fe23d076de5001263e9684ac4e48330751ea5a5",
     "/favicon.ico": "7a750d8a85375a068243856f8a3517482bcb0d9a",
-    "/index.html": "aaeff34e536c9d785e03b547cd44bb08371fef23",
-    "/main-XAXIJENM.js": "86c994d5be349e6ecea71a855026bac22aae1a4a",
-    "/manifest.webmanifest": "5b4cac972dd139dbc03e2b48c842c655a730705b",
+    "/index.html": "330974c3bddcadd5e5a55d4e09c814f1374bad96",
+    "/main-TBBTYUWH.js": "472f9a1904f1cf81cd38a2bfbd7b4f08c9376b78",
+    "/manifest.webmanifest": "c15f43bc4e2df907b711575f9beeded5272cd430",
     "/polyfills-A7MJM4D4.js": "547053781d5952561abe68a51cc6c1a2b1b51c55",
     "/styles-WBR4WQFX.css": "343bc51734fe9e3d4d7e37cbe190b1b1b59a5bad"
   },
