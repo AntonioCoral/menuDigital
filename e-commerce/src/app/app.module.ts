@@ -14,11 +14,12 @@ import { NavbarComponent } from "./componentes/navbar/navbar.component";
 import { ProductListComponent } from "./componentes/product-list/product-list.component";
 import { HttpClientModule } from "@angular/common/http";
 import { CartComponent } from "./componentes/cart/cart.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { provideToastr, ToastrModule } from "ngx-toastr";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { Router, RouterModule, Scroll } from "@angular/router";
 import { filter } from "rxjs";
+import { RegisterComponent } from "./componentes/register/register.component";
 
 
 @NgModule({
@@ -27,13 +28,15 @@ import { filter } from "rxjs";
         LoginComponent,
         NavbarComponent,
         ProductListComponent,
-        CartComponent
+        CartComponent,
+        RegisterComponent,
     ],
     imports: [
         AppRoutingModule,
         FormsModule,
         HttpClientModule,
         BrowserModule,
+        ReactiveFormsModule,
         RouterModule.forRoot([], {
   scrollPositionRestoration: 'enabled'  // Restaura el scroll automáticamente al navegar
 }),
@@ -44,6 +47,7 @@ import { filter } from "rxjs";
         MatMenuModule,
         MatListModule,
         BrowserAnimationsModule,
+        
         
         ToastrModule.forRoot({
           timeOut: 1000,
@@ -61,6 +65,7 @@ import { filter } from "rxjs";
           // or after 30 seconds (whichever comes first).
           registrationStrategy: 'registerWhenStable:30000'
         }), 
+        
     ],
     providers:[
 

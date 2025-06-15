@@ -1,0 +1,177 @@
+<!-- register.component.html -->
+<!-- register.component.html (Landing Page Extendida) -->
+<div class="min-h-screen bg-gray-50">
+  <!-- Hero Section -->
+  <section class="bg-white shadow-md p-8 text-center animate-fade-in">
+    <h1 class="text-3xl md:text-4xl font-extrabold text-yellow-600">Crea tu Menú Digital Gratis</h1>
+    <p class="mt-2 text-gray-600 text-lg">Accede a un panel profesional para tu negocio sin pagar nada la primera semana.</p>
+    <a routerLink="/register" class="inline-block mt-6 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-300">
+      Comienza Gratis
+    </a>
+  </section>
+
+  <!-- ¿Cómo funciona? -->
+  <section class="bg-gray-100 py-10">
+    <h2 class="text-2xl font-bold text-center mb-10">¿Cómo funciona?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
+      <div class="text-center">
+        <img src="assets/icons/link.svg" class="mx-auto w-16 mb-4" alt="Compartir menú">
+        <h3 class="font-semibold text-lg">Comparte el link del menú</h3>
+        <p class="text-sm text-gray-600">El cliente entra sin instalar apps, directo desde el link personalizado.</p>
+      </div>
+      <div class="text-center">
+        <img src="assets/icons/order.svg" class="mx-auto w-16 mb-4" alt="Hacer pedido">
+        <h3 class="font-semibold text-lg">El cliente hace su pedido</h3>
+        <p class="text-sm text-gray-600">Elige productos, datos de envío y forma de pago.</p>
+      </div>
+      <div class="text-center">
+        <img src="assets/icons/notify.svg" class="mx-auto w-16 mb-4" alt="Recibir comanda">
+        <h3 class="font-semibold text-lg">Recibes la comanda</h3>
+        <p class="text-sm text-gray-600">Te llega por WhatsApp todo limpio y organizado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beneficios -->
+  <section class="py-12 px-4 max-w-5xl mx-auto">
+    <h2 class="text-2xl font-bold text-center mb-10">¿Por qué elegirnos?</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="flex items-start space-x-4">
+        <img src="assets/icons/clock.svg" class="w-8 h-8 mt-1" alt="Ahorra tiempo">
+        <div>
+          <h4 class="font-semibold">Ahorra tiempo</h4>
+          <p class="text-sm text-gray-600">Recibe pedidos listos sin llamadas ni confusiones.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4">
+        <img src="assets/icons/whatsapp.svg" class="w-8 h-8 mt-1" alt="WhatsApp integrado">
+        <div>
+          <h4 class="font-semibold">WhatsApp integrado</h4>
+          <p class="text-sm text-gray-600">Tus pedidos llegan directo a tu celular con toda la información.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4">
+        <img src="assets/icons/responsive.svg" class="w-8 h-8 mt-1" alt="Diseño adaptable">
+        <div>
+          <h4 class="font-semibold">Diseño adaptable</h4>
+          <p class="text-sm text-gray-600">Compatible con celulares, tablets y computadoras.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4">
+        <img src="assets/icons/free.svg" class="w-8 h-8 mt-1" alt="Prueba gratis">
+        <div>
+          <h4 class="font-semibold">7 días gratis</h4>
+          <p class="text-sm text-gray-600">Sin tarjetas, sin compromiso. Solo pruebas tu menú.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="text-center py-10 bg-yellow-50">
+    <h2 class="text-2xl font-bold mb-4">¿Listo para digitalizar tu negocio?</h2>
+    <p class="mb-6 text-gray-700">Hazlo hoy mismo con nuestra plataforma profesional y sencilla.</p>
+    <a routerLink="/register" class="btn">Crear Menú Digital Gratis</a>
+  </section>
+</div>
+
+<style>
+  .btn {
+    @apply bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-300;
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+
+<div class="min-h-screen bg-gray-50 p-4 flex flex-col items-center justify-center animate-fade-in">
+  <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-6">
+    <h2 class="text-2xl font-bold text-center mb-6 text-yellow-600">
+      ✨ Crea tu Menú Digital Gratis por 7 días
+    </h2>
+
+    <!-- Paso 1: Datos de la Empresa -->
+    <form *ngIf="step === 1" [formGroup]="companyForm" (ngSubmit)="goToStep2()" class="space-y-4">
+      <div>
+        <label class="block font-semibold">Nombre de la Empresa</label>
+        <input formControlName="name" class="input" type="text" placeholder="Ej: Taquería El Buen Sabor" />
+        <p *ngIf="companyForm.get('name')?.invalid && companyForm.get('name')?.touched" class="text-red-500 text-sm">Nombre requerido</p>
+      </div>
+
+      <div>
+        
+        <label class="block font-semibold">Dirección</label>
+        <input formControlName="address" class="input" type="text" placeholder="Ej: Calle 123, Col. Centro" />
+      </div>
+
+      <div>
+        <label class="block font-semibold">Correo de Contacto</label>
+        <input formControlName="contactEmail" class="input" type="email" placeholder="ejemplo@correo.com" />
+        <p *ngIf="companyForm.get('contactEmail')?.invalid && companyForm.get('contactEmail')?.touched" class="text-red-500 text-sm">Correo inválido</p>
+      </div>
+
+      <div>
+        <label class="block font-semibold">Subdominio</label>
+        <input formControlName="subdomain" class="input" type="text" placeholder="Ej: mibusiness" />
+        <p class="text-xs text-gray-500">Tu menú estará en: https://codeconnectivity.com/<strong>subdominio</strong></p>
+      </div>
+
+      <button type="submit" class="btn w-full">Continuar al Registro</button>
+
+    </form>
+
+    <!-- Paso 2: Registro del Usuario -->
+    <form *ngIf="step === 2" [formGroup]="userForm" (ngSubmit)="submitForm()" class="space-y-4">
+      <div>
+        <label class="block font-semibold">Nombre de Usuario</label>
+        <input formControlName="username" class="input" type="text" placeholder="Ej: admin" />
+      </div>
+
+      <div>
+        <label class="block font-semibold">Contraseña</label>
+        <input formControlName="password" class="input" type="password" placeholder="Mínimo 6 caracteres" />
+        <p *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-red-500 text-sm">Contraseña muy corta</p>
+      </div>
+
+      <div class="flex justify-between">
+        <button type="button" class="btn-secondary" (click)="step = 1">Volver</button>
+        <button class="btn">Crear Cuenta</button>
+      </div>
+    </form>
+
+    <!-- Confirmación -->
+    <div *ngIf="step === 3" class="text-center space-y-4">
+      <div class="text-green-600 text-4xl">
+        🎉
+      </div>
+      <h3 class="text-xl font-bold">¡Felicidades!</h3>
+      <p>Tu empresa ya tiene acceso al panel administrativo y menú digital gratis por 7 días.</p>
+      <a class="btn" href="https://codeconnectivity.com">Ir al Panel Administrativo</a>
+    </div>
+  </div>
+</div>
+
+<!-- Estilos reutilizables -->
+<style>
+  .input {
+    @apply w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400;
+  }
+  .btn {
+    @apply bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300;
+  }
+  .btn-secondary {
+    @apply bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded-lg;
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
