@@ -27,6 +27,7 @@ export class CartComponent implements OnInit {
   clabe: string = '';
   bankName: string = '';
   accountHolder: string = '';
+  deliveryType: string = 'Domicilio'; // Valor inicial
   isOpen: boolean = false;
 
   constructor(
@@ -85,10 +86,23 @@ export class CartComponent implements OnInit {
   }
 
   nextStep(): void {
-    if (this.step < 3) {
-      this.step++;
+  if (this.step === 1) {
+    if (!this.deliveryType) {
+      alert('Selecciona cómo deseas recibir tu pedido.');
+      return;
+    }
+
+    if (this.deliveryType === 'Domicilio' && !this.address.trim()) {
+      alert('Por favor ingresa tu dirección para la entrega.');
+      return;
     }
   }
+
+  if (this.step < 3) {
+    this.step++;
+  }
+}
+
 
   previousStep(): void {
     if (this.step > 1) {
@@ -129,7 +143,7 @@ export class CartComponent implements OnInit {
     // Encabezado con emojis
     let message = `🛒 *Orden de Compra* 🛒\n\n`;
     message += `👤 *Nombre:* ${this.name}\n📞 *Teléfono:* ${this.phone}\n🏠 *Dirección:* ${this.address}\n📍 *Ubicación:* ${this.locationUrl}\n💳 *Método de Pago:* ${this.paymentMethod}\n`;
-  
+    message += `🚚 *Tipo de entrega:* ${this.deliveryType}\n`;
     // Detalle del método de pago
     if (this.paymentMethod === 'efectivo') {
       message += `💵 *Pagará con:* ${this.paga}\n`;

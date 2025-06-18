@@ -106,12 +106,41 @@
             <label for="phone" class="form-label">Teléfono</label>
             <input placeholder="Ingresa tu número de teléfono" type="tel" class="form-control" id="phone" [(ngModel)]="phone" name="phone" required>
           </div>
-          <div class="mb-3 font-sans">
+                    <!-- Selector de tipo de entrega -->
+          <div class="mb-4">
+            <p class="text-sm font-medium mb-1">¿Cómo deseas recibir tu pedido?</p>
+
+            <div class="bg-gray-100 rounded-full p-1 flex w-full max-w-xs mx-auto">
+              <button
+                (click)="deliveryType = 'Domicilio'"
+                [class.bg-green-500]="deliveryType === 'Domicilio'"
+                [class.text-white]="deliveryType === 'Domicilio'"
+                [class.text-gray-700]="deliveryType !== 'Domicilio'"
+                class="flex-1 py-2 text-sm font-semibold rounded-full transition duration-200"
+              >
+                A domicilio
+              </button>
+              <button
+                (click)="deliveryType = 'Sucursal'"
+                [class.bg-green-500]="deliveryType === 'Sucursal'"
+                [class.text-white]="deliveryType === 'Sucursal'"
+                [class.text-gray-700]="deliveryType !== 'Sucursal'"
+                class="flex-1 py-2 text-sm font-semibold rounded-full transition duration-200"
+              >
+                Sucursal
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Campos de dirección y ubicación solo si es domicilio -->
+          <div *ngIf="deliveryType === 'Domicilio'" class="mb-3 font-sans">
             <label for="address" class="form-label">Dirección</label>
             <input placeholder="Ingresa tu dirección" type="text" class="form-control" id="address" [(ngModel)]="address" name="address">
             <button type="button" class="btn btn-info mt-2" (click)="fetchLocation()">Obtener Ubicación</button>
-            <p *ngIf="locationUrl">Ubicación: <a href="{{ locationUrl }}" target="_blank">Obtenida</a></p>
+            <p *ngIf="locationUrl">Ubicación: <a [href]="locationUrl" target="_blank">Obtenida</a></p>
           </div>
+
         </form>
       </div>
 
